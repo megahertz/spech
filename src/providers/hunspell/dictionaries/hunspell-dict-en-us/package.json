@@ -1,0 +1,38 @@
+{
+  "_from": "hunspell-dict-en-us",
+  "_id": "hunspell-dict-en-us@0.1.0",
+  "_inBundle": false,
+  "_integrity": "sha512-CtdGlTqOMGQYabidE92rhCTiVj3MqmQp9SUAao6XLRTXkHduZkjd8ATT3bCV4sLhxn+lPFNetQnrNfrOyR6osw==",
+  "_location": "/hunspell-dict-en-us",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "tag",
+    "registry": true,
+    "raw": "hunspell-dict-en-us",
+    "name": "hunspell-dict-en-us",
+    "escapedName": "hunspell-dict-en-us",
+    "rawSpec": "",
+    "saveSpec": null,
+    "fetchSpec": "latest"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/hunspell-dict-en-us/-/hunspell-dict-en-us-0.1.0.tgz",
+  "_shasum": "490ab0ed46c42f43b8cb8c891cb7d843d3cc993f",
+  "_spec": "hunspell-dict-en-us",
+  "_where": "/tmp/1",
+  "author": {
+    "name": "OJ Kwon",
+    "email": "kwon.ohjoong@gmail.com"
+  },
+  "bundleDependencies": false,
+  "defaultRegion": true,
+  "deprecated": false,
+  "description": "Hunspell dictionaries for English (United States)",
+  "gitHead": "a23b31a4897f78dd0e751775c8007138358cb58b",
+  "license": "(MIT OR BSD)",
+  "name": "hunspell-dict-en-us",
+  "version": "0.1.0"
+}
