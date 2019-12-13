@@ -1,5 +1,8 @@
 # spech
 
+[![Build Status](https://travis-ci.org/megahertz/spech.svg?branch=master)](https://travis-ci.org/megahertz/spech)
+[![NPM version](https://badge.fury.io/js/spech.svg)](https://badge.fury.io/js/spech)
+
 Check your text for grammar and spelling error using multiple providers.
 
 - Zero config
@@ -76,3 +79,13 @@ browserify
 ```
 
 More detailed description will be ready soon.
+
+## Roadmap
+
+- [ ] Ignore some blocks depending on file format
+- [ ] Built-in dictionary for common JavaScript texts
+- [ ] Detect CI environment
+- [ ] Configuration docs
+- [ ] API docs
+- [ ] Read from stdin
+- [ ] Advanced reporter features
