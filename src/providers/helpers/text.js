@@ -1,5 +1,7 @@
 'use strict';
 
+require('../../utils/polyfills');
+
 module.exports = {
   findCutPosition,
   split,
