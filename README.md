@@ -1,4 +1,4 @@
-# speck
+# spech
 
 Check your text for grammar and spelling error using multiple providers.
 
@@ -7,13 +7,13 @@ Check your text for grammar and spelling error using multiple providers.
 
 ## Usage
 
-`npx speck`
+`npx spech`
 
 By default, it finds `**/*.md` files and checks it using en-US language.
 
 Use `-l` flag to specify another language:
 
-`npx speck -l ru`
+`npx spech -l ru`
 
 ## Providers
 
@@ -48,10 +48,10 @@ free 10k requests/day or 10m chars/day.
 ## Configuring
 
 You can store configuration in two places:
- - speck.config.js
- - "speck" section of the package.json
+ - spech.config.js
+ - "spech" section of the package.json
 
-speck.config.js
+spech.config.js
 
 ```js
 module.exports = {

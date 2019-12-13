@@ -4,7 +4,7 @@ const options = require('package-options');
 
 function getConfig() {
   options.help(`
-Usage: speck [Path patterns]
+Usage: spech [Path patterns]
 General options:
   -l, --languages    Used language/languages, default 'en-us'
   -d, --dictionaries Dictionary file patterns

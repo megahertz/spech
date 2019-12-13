@@ -29,7 +29,7 @@ function createCacheDir(subDir) {
  */
 function getCachePath(subDir = '') {
   const home = os.homedir();
-  const name = 'speck.js';
+  const name = 'spech.js';
   const targetSubDir = path.join(name, subDir);
 
   switch (process.platform) {

@@ -14,7 +14,7 @@
     "prepack": "npm run test:full"
   },
   "typings": "src/index.d.ts",
-  "repository": "megahertz/speck",
+  "repository": "megahertz/spech",
   "files": [
     "src/*",
     "!__specs__"
@@ -27,8 +27,8 @@
   ],
   "author": "Alexey Prokhorov",
   "license": "MIT",
-  "bugs": "https://github.com/megahertz/speck/issues",
-  "homepage": "https://github.com/megahertz/speck#readme",
+  "bugs": "https://github.com/megahertz/spech/issues",
+  "homepage": "https://github.com/megahertz/spech#readme",
   "engines": {
     "node": ">=8"
   },
