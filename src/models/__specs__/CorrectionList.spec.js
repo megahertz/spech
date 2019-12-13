@@ -19,9 +19,9 @@ describe('CorrectionList', () => {
 
   it('asLines', () => {
     const list = new CorrectionList([
-      new Correction({ startLine: { number: 0 }, endLine: { number: 0 }}),
-      new Correction({ startLine: { number: 0 }, endLine: { number: 0 }}),
-      new Correction({ startLine: { number: 2 }, endLine: { number: 2 }}),
+      new Correction({ startLine: { number: 0 }, endLine: { number: 0 } }),
+      new Correction({ startLine: { number: 0 }, endLine: { number: 0 } }),
+      new Correction({ startLine: { number: 2 }, endLine: { number: 2 } }),
     ]);
 
     const lines = list.asLines();
@@ -46,4 +46,3 @@ describe('CorrectionList', () => {
     expect(filtered.map(c => c.fragment)).toEqual(['test', 'test3']);
   });
 });
-

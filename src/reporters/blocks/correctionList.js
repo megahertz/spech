@@ -2,12 +2,12 @@
 
 module.exports = {
   correctionListFactory,
-}
+};
 
 function correctionListFactory({
   buildCorrection,
   providerOrder,
-  showDuplicates = false
+  showDuplicates = false,
 }) {
   /**
    * @param {CorrectionList} corrections
@@ -28,5 +28,5 @@ function correctionListFactory({
 
       return items;
     }, []);
-  }
+  };
 }

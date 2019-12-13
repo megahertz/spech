@@ -30,7 +30,7 @@ describe('Dictionary', () => {
 
       dic.add('/test/');
       dic.add('/test/u');
-      dic.add('/\/test/iu');
+      dic.add('/\\/test/iu');
 
       expect(dic.stringItems.size).toBe(0);
       expect(dic.regexpItems.length).toBe(3);
@@ -55,5 +55,5 @@ describe('Dictionary', () => {
       dic.add('/\\d-\\d-\\d/');
       expect(dic.includes('1-2-3')).toBe(true);
     });
-  })
+  });
 });

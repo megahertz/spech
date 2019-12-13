@@ -1,5 +1,7 @@
 'use strict';
 
+/* eslint-disable object-property-newline */
+
 const Loader = require('./Loader');
 
 const LANGUAGES = [
@@ -8,7 +10,7 @@ const LANGUAGES = [
   'fr-fr', 'he-il', 'hr-hr', 'hu-hu', 'it-it', 'ko', 'lt-lt', 'lv-lv',
   'nb-no', 'nl-nl', 'pl-pl', 'pt-br', 'pt-pt', 'ro-ro', 'ru-ru', 'sk-sk',
   'sl-si', 'sr-latn', 'sr', 'sv-se', 'ta-in', 'tg-tg', 'tr', 'uk-ua',
-  'vi'
+  'vi',
 ];
 
 const ALIASES = {
@@ -17,7 +19,7 @@ const ALIASES = {
   he: 'he-il', hr: 'hr-hr', hu: 'hu-hu', it: 'it-it', lt: 'lt-lt', lv: 'lv-lv',
   nb: 'nb-no', nl: 'nl-nl', pl: 'pl-pl', pt: 'pt-pt', ro: 'ro-ro', ru: 'ru-ru',
   sk: 'sk-sk', sl: 'sl-si', sv: 'sv-se', ta: 'ta-in', tg: 'tg-tg', uk: 'uk-ua',
-}
+};
 
 module.exports = {
   loadDictionary,

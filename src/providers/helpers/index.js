@@ -34,6 +34,5 @@ function createHelpers(config, { logger }) {
 
     logger,
     text,
-  }
+  };
 }
-

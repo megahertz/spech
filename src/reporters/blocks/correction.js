@@ -34,5 +34,5 @@ function correctionFactory({ showProvider = false } = {}) {
     }
 
     return result;
-  }
+  };
 }

@@ -47,5 +47,5 @@ describe('correction', () => {
         text: ' ]',
       },
     ]);
-  })
+  });
 });

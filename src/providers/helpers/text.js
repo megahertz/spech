@@ -4,7 +4,7 @@ module.exports = {
   findCutPosition,
   split,
   splitAndProcessAsync,
-}
+};
 
 /**
  *
@@ -25,11 +25,13 @@ function split(text, maxLength) {
   let remainingText = text;
   let offset = 0;
 
-  while(remainingText.length > maxLength) {
+  while (remainingText.length > maxLength) {
     const cutPosition = findCutPosition(remainingText, maxLength);
 
-    const text = remainingText.substr(0, cutPosition);
-    fragments.push({ text, offset });
+    fragments.push({
+      text: remainingText.substr(0, cutPosition),
+      offset,
+    });
 
     offset += cutPosition;
     remainingText = remainingText.substr(cutPosition);

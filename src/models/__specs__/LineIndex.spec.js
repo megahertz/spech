@@ -2,7 +2,10 @@
 
 const { describe, expect, it } = require('humile');
 const LineIndex = require('../LineIndex');
-const { loremIpsum, loremIpsumIndexes } = require('../../__specs__/texts.fixture');
+const {
+  loremIpsum,
+  loremIpsumIndexes,
+} = require('../../__specs__/texts.fixture');
 
 describe('LineIndex', () => {
   describe('fromText', () => {
@@ -81,7 +84,7 @@ describe('LineIndex', () => {
           endLine: { number: 1, position: 6 },
         });
       });
-    })
+    });
   });
 });
 

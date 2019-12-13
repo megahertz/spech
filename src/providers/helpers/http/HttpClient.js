@@ -65,7 +65,7 @@ class HttpClient extends EventEmitter {
       body: JSON.stringify(data),
       headers: {
         'Content-Type':   'application/json',
-        'Content-Length': Buffer.byteLength(body)
+        'Content-Length': Buffer.byteLength(body),
       },
       method: 'post',
       ...this.options,
@@ -82,7 +82,7 @@ class HttpClient extends EventEmitter {
       body,
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
-        'Content-Length': Buffer.byteLength(body)
+        'Content-Length': Buffer.byteLength(body),
       },
       method: 'post',
       ...this.options,

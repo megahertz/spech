@@ -1,8 +1,9 @@
 'use strict';
 
-const AbstractProvider = require('../Provider')
-const { loadDictionary, normalizeLanguage } = require('./dictionaries')
 const { loadModule } = require('hunspell-asm');
+const AbstractProvider = require('../Provider');
+const { loadDictionary, normalizeLanguage } = require('./dictionaries');
+
 
 class Provider extends AbstractProvider {
   /**
@@ -100,6 +101,8 @@ class Provider extends AbstractProvider {
 function splitText(text) {
   const words = [];
   const wordRegExp = /\p{L}+/ug;
+
+  // eslint-disable-next-line no-constant-condition
   while (true) {
     const { index: position = -1, '0': word } = wordRegExp.exec(text) || {};
     if (position === -1) {

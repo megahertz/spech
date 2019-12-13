@@ -7,7 +7,7 @@ const { URL } = require('url');
 const { PassThrough } = require('stream');
 
 module.exports = {
-  request
+  request,
 };
 
 /**
@@ -34,7 +34,7 @@ class Response {
       stream.on('data', chunk => chunks.push(chunk));
       stream.on('error', reject);
       stream.on('end', () => resolve(Buffer.concat(chunks)));
-    })
+    });
   }
 
   /**
@@ -92,7 +92,7 @@ function createHttpStream(uri, options = {}) {
 
   options.method = options.method || 'get';
 
-  const request = http.request(makeRequestOptions(uri, options), (res) => {
+  const httpRequest = http.request(makeRequestOptions(uri, options), (res) => {
     const { statusCode } = res;
     responseInstance = res;
 
@@ -110,23 +110,23 @@ function createHttpStream(uri, options = {}) {
     res.pipe(stream);
   });
 
-  request
+  httpRequest
     .on('error', error)
     .on('timeout', () => {
       error(new Error(`Timeout error when requesting ${uri}`));
     });
 
   if (options.body) {
-    request.write(options.body);
+    httpRequest.write(options.body);
   }
 
-  request.end();
+  httpRequest.end();
 
   return stream;
 
   function error(e) {
     stream.emit('error', e);
-    request.abort();
+    httpRequest.abort();
     responseInstance && responseInstance.resume();
   }
 }
@@ -148,7 +148,7 @@ function logRequest(uri, options, showBody = true) {
     } else if (contentType === 'application/x-www-form-urlencoded') {
       formattedBody = querystring.parse(body);
     } else {
-
+      formattedBody = body;
     }
 
     debugFn('Request body:', formattedBody);
@@ -181,5 +181,5 @@ function makeRequestOptions(urlString, options) {
     hostname: url.hostname,
     port: url.port === '' ? Number(url.port) : undefined,
     path: `${url.pathname || ''}${url.search || ''}`,
-  }
+  };
 }

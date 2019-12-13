@@ -44,7 +44,7 @@ describe('helpers/text', () => {
         {
           offset: 21,
           text: 'Lorem Ipsum is simply ',
-        }
+        },
       ]);
     });
 
@@ -52,7 +52,7 @@ describe('helpers/text', () => {
       expect(text.split(loremIpsum, 290).slice(1, 2)).toEqual([
         {
           offset: 266,
-          text: jasmine.stringMatching(/^ It has survived/)
+          text: jasmine.stringMatching(/^ It has survived/),
         },
       ]);
     });
@@ -66,7 +66,7 @@ describe('helpers/text', () => {
         {
           offset: 27,
           text: 'Ipsum is simply dummy text ',
-        }
+        },
       ]);
     });
 
@@ -84,8 +84,8 @@ describe('helpers/text', () => {
 
     expect(suggestions).toEqual([{}, {}, {}, {}]);
 
-    async function callback({ text, offset }) {
+    async function callback() {
       return [{}];
     }
-  })
+  });
 });

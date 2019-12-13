@@ -1,8 +1,9 @@
 'use strict';
 
 const fs = require('fs');
-const { createCacheDir, getCachePath } = require('./cache')
 const path = require('path');
+const { createCacheDir, getCachePath } = require('./cache');
+
 
 class Loader {
   /**
@@ -58,7 +59,7 @@ class Loader {
 
       return { aff, dic };
     } catch (e) {
-      logErrors && this.logWarn(`Can't load dictionary from ${dirPath}`, e)
+      logErrors && this.logWarn(`Can't load dictionary from ${dirPath}`, e);
       return null;
     }
   }
@@ -105,7 +106,7 @@ class Loader {
    * @param {{ aff: Buffer, dic: Buffer }} dict
    * @return {Promise<[void, void]>}
    */
-  async saveCache( dict) {
+  async saveCache(dict) {
     const lang = this.language;
     let dictPath = '';
 
