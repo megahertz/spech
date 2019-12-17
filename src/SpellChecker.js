@@ -1,5 +1,7 @@
 'use strict';
 
+require('./utils/polyfills');
+
 const fs = require('fs');
 const Dictionary = require('./models/Dictionary');
 const Correction = require('./models/Correction');
