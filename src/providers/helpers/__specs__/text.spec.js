@@ -1,7 +1,7 @@
 'use strict';
 
 const { describe, expect, it, jasmine } = require('humile');
-const { loremIpsum } = require('../../../__specs__/texts.fixture');
+const { loremIpsum } = require('../../../__specs__/fixtures');
 const text = require('../text');
 
 describe('helpers/text', () => {

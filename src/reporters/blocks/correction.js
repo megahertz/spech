@@ -4,7 +4,7 @@ module.exports = {
   correctionFactory,
 };
 
-function correctionFactory({ showProvider = false } = {}) {
+function correctionFactory({ showProvider = false, showRule = false } = {}) {
   /**
    * @param {Correction} correction
    * @return {Spech.PrintItem}
@@ -25,6 +25,10 @@ function correctionFactory({ showProvider = false } = {}) {
     if (correction.message) {
       result.push({ text: ': ', color: 'red' });
       result.push({ text: correction.message });
+    }
+
+    if (correction.rule && showRule) {
+      result.push({ text: ` (${correction.rule})`, color: 'gray' });
     }
 
     if (correction.suggestions.length > 0) {

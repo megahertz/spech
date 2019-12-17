@@ -2,11 +2,14 @@
 
 const fs = require('fs');
 const Dictionary = require('./models/Dictionary');
+const Correction = require('./models/Correction');
+const CorrectionList = require('./models/CorrectionList');
 const Document = require('./models/Document');
 const { createProvider, createProviderHelpers } = require('./providers');
 const Provider = require('./providers/Provider');
 const FileFinder = require('./utils/FileFinder');
 const Logger = require('./utils/Logger');
+const transformers = require('./transformers');
 const { shortenPath } = require('./utils/path');
 
 class SpellChecker {
@@ -43,6 +46,11 @@ class SpellChecker {
      * @type {string[]}
      */
     this.languages = config.languages;
+
+    /**
+     * @type {boolean}
+     */
+    this.ignoreCase = config.ignoreCase;
   }
 
   /**
@@ -161,11 +169,32 @@ class SpellChecker {
 
   /**
    * @param {string} text
+   * @param {string} format
    * @return {Promise<CorrectionList>}
    */
-  async checkText(text) {
-    const document = new Document(null, text);
-    return this.checkDocument(document);
+  async checkText(text, format) {
+    const transforms = transformers.createTransformers([
+      transformers.format(format),
+      transformers.inDictionary(this.dictionary),
+      transformers.ignoreCase(this.ignoreCase),
+    ]);
+
+    const preparedText = transforms.modifyText(text);
+
+    const promises = this.providers.map(async (provider) => {
+      const corrections = await provider.check(preparedText, this.languages);
+
+      return corrections.filter(Boolean).map((correction) => {
+        return transforms.modifyCorrection(new Correction({
+          ...correction,
+          provider: provider.name,
+        }));
+      });
+    });
+
+    const corrections = await Promise.all(promises);
+
+    return new CorrectionList(corrections.flat(2).filter(Boolean));
   }
 
   /**
@@ -177,17 +206,7 @@ class SpellChecker {
       throw new Error('document should have type Document');
     }
 
-    const promises = this.providers.map(async (provider) => {
-      const corrections = await provider.check(document.text, this.languages);
-
-      corrections.forEach((correction) => {
-        document.addCorrection(correction, provider.name);
-      });
-    });
-
-    await Promise.all(promises);
-
-    document.removeDictionaryCorrections(this.dictionary);
+    document.corrections = await this.checkText(document.text, document.name);
 
     return document.corrections;
   }

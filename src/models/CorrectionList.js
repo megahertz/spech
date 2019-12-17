@@ -13,13 +13,6 @@ class CorrectionList {
   }
 
   /**
-   * @param {Correction} correction
-   */
-  add(correction) {
-    this.items.push(correction);
-  }
-
-  /**
    * @param {Dictionary} dictionary
    * @return {this}
    */

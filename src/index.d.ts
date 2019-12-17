@@ -50,6 +50,7 @@ declare namespace Spech {
     providerOrder: string[];
     showDuplicates?: boolean;
     showProvider?: boolean;
+    showRule?: boolean;
   }
 
   interface TextFragment {

@@ -10,12 +10,14 @@ General options:
   -d, --dictionaries Dictionary file patterns
       --path STRING  Current path
   -p, --providers    Add provider
+  -c, --ignore-case  Ignore incorrect usage of letter case
   
 Appearance options:
       --colors          Force turn on colors in spec output 
       --no-colors       Force turn off colors in spec output
       --show-duplicates Show duplicate corrections from different providers
       --show-provider   Display provider name in results
+      --show-rule       Display correction rule if provider supports
       --log NUMBER      From 0 (only errors) to 3 (debug)
      
 Misc options:            
@@ -51,6 +53,9 @@ class Config {
     /** @type {number} */
     this.log = onUndefined(opts.log, 2);
 
+    /** @type {boolean} */
+    this.ignoreCase = onUndefined(opts.ignoreCase, true);
+
     /** @type {object} */
     this.httpConfig = {
       connectionLimit: opts.connectionLimit || 10,
@@ -68,6 +73,7 @@ class Config {
     this.reporterConfig = {
       showDuplicates: onUndefined(opts.showDuplicates, this.log > 1),
       showProvider: onUndefined(opts.showProvider, this.log > 0),
+      showRule: onUndefined(opts.showRule, this.log > 1),
       providerOrder: this.providers.map(p => p.name),
     };
 

@@ -67,7 +67,7 @@ module.exports = {
 ```
 
 ### Dictionaries
-You can place words/phrases which is marked as error to you dictionary file.
+You can place words/phrases which is marked as error to your dictionary file.
 Just create a file with .dic extension to the project root:
 
 mydictionary.dic

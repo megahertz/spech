@@ -1,37 +1,45 @@
 'use strict';
 
-class LineIndex {
-  constructor(index, textLength) {
-    this.index = index;
-    this.textLength = textLength;
+const Transformer = require('./Transformer');
+
+class LineNumber extends Transformer {
+  /**
+   * @param {string} text
+   * @return {string}
+   * @package
+   */
+  modifyText(text) {
+    this.index = LineNumber.buildIndex(text);
+    this.textLength = text.length;
+    return text;
   }
 
-  static fromText(text) {
-    const index = [];
+  /**
+   * @param {Correction} correction
+   * @return {Correction}
+   * @package
+   */
+  modifyCorrection(correction) {
+    const lineInfo = this.getFragmentLines(
+      correction.position,
+      correction.length
+    );
 
-    if (text.length < 1) {
-      return new LineIndex([0], 0);
+    if (!lineInfo) {
+      return null;
     }
 
-    let position = 0;
-    while (position > -1) {
-      index.push(position + 1);
-      position = text.indexOf('\n', position + 1);
-    }
+    correction.startLine = lineInfo.startLine;
+    correction.endLine = lineInfo.endLine;
 
-    index[0] = 0;
-
-    if (text.length <= index[index.length - 1]) {
-      index.pop();
-    }
-
-    return new LineIndex(index, text.length);
+    return correction;
   }
 
   /**
    * @param {number} position
    * @param {number} length
    * @return {Spech.FragmentPosition | null}
+   * @package
    */
   getFragmentLines(position, length) {
     const result = {
@@ -95,6 +103,33 @@ class LineIndex {
 
     return result;
   }
+
+  /**
+   * @param {string} text
+   * @return {number[]}
+   * @package
+   */
+  static buildIndex(text) {
+    const index = [];
+
+    if (text.length < 1) {
+      return [0];
+    }
+
+    let position = 0;
+    while (position > -1) {
+      index.push(position + 1);
+      position = text.indexOf('\n', position + 1);
+    }
+
+    index[0] = 0;
+
+    if (text.length <= index[index.length - 1]) {
+      index.pop();
+    }
+
+    return index;
+  }
 }
 
-module.exports = LineIndex;
+module.exports = LineNumber;

@@ -13,6 +13,7 @@ class Default {
   constructor(options) {
     const buildCorrection = correctionFactory({
       showProvider: options.showProvider,
+      showRule: options.showRule,
     });
 
     this.builders = {

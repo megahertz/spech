@@ -1,6 +1,4 @@
-'use strict';
-
-const loremIpsum = `What is Lorem Ipsum?
+What is Lorem Ipsum?
 Lorem Ipsum is simply dummy text of the printing and typesetting industry.
 Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
 when an unknown printer took a galley of type and scrambled it to make a type
@@ -37,15 +35,4 @@ comes from a line in section 1.10.32.
 The standard chunk of Lorem Ipsum used since the 1500s is reproduced below
 for those interested. Sections 1.10.32 and 1.10.33 from "de Finibus Bonorum
 et Malorum" by Cicero are also reproduced in their exact original form,
-accompanied by English versions from the 1914 translation by H. Rackham.`;
-
-const loremIpsumIndexes = [
-  0, 21, 96, 174, 252, 331, 407, 479, 551, 596, 597, 615, 694, 771, 847, 926,
-  1004, 1083, 1153, 1229, 1230, 1231, 1256, 1330, 1404, 1476, 1544, 1616, 1691,
-  1763, 1833, 1906, 1982, 2020, 2021, 2096, 2172, 2244,
-];
-
-module.exports = {
-  loremIpsum,
-  loremIpsumIndexes,
-};
+accompanied by English versions from the 1914 translation by H. Rackham.

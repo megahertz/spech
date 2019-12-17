@@ -15,6 +15,10 @@ class Provider extends AbstractProvider {
     this.httpClient = helpers.createHttpClient();
     this.httpClient.on('error', this.logger.callback('hunspell:', 'info'));
 
+    if (this.options.splitCamelCaseWords === undefined) {
+      this.options.splitCamelCaseWords = true;
+    }
+
     this.name = 'hunspell';
 
     this.hunspellInstances = {};
@@ -32,7 +36,7 @@ class Provider extends AbstractProvider {
     }
 
     const hunspell = await this.getHunspell(languages[0]);
-    const words = splitText(text);
+    const words = splitText(text, this.options.splitCamelCaseWords);
 
     return words.reduce((warnings, { word, position }) => {
       if (hunspell.spell(word)) {
@@ -98,8 +102,8 @@ class Provider extends AbstractProvider {
   }
 }
 
-function splitText(text) {
-  const words = [];
+function splitText(text, splitCamelCase = true) {
+  let words = [];
   const wordRegExp = /\p{L}+/ug;
 
   // eslint-disable-next-line no-constant-condition
@@ -109,10 +113,26 @@ function splitText(text) {
       break;
     }
 
+    if (splitCamelCase) {
+      words = words.concat(splitCamelCaseWord(word, position));
+      continue;
+    }
+
     words.push({ word, position });
   }
 
   return words;
+}
+
+function splitCamelCaseWord(word, position) {
+  const parts = word.split(/(?=[A-Z])/);
+  let offset = position;
+
+  return parts.map((part) => {
+    const result = { word: part, position: offset };
+    offset += word.length;
+    return result;
+  });
 }
 
 module.exports = Provider;

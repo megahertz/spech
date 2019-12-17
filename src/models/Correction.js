@@ -8,6 +8,7 @@ class Correction {
     suggestions,
     fragment,
     provider,
+    rule,
     startLine = { number: -1, position: -1 },
     endLine = { number: -1, position: -1 },
   }) {
@@ -17,6 +18,7 @@ class Correction {
     this.suggestions = suggestions;
     this.fragment = fragment;
     this.provider = provider;
+    this.rule = rule;
 
     this.startLine = startLine;
     this.endLine = endLine;

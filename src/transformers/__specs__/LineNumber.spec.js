@@ -1,14 +1,14 @@
 'use strict';
 
 const { describe, expect, it } = require('humile');
-const LineIndex = require('../LineIndex');
+const LineNumber = require('../LineNumber');
 const {
   loremIpsum,
   loremIpsumIndexes,
-} = require('../../__specs__/texts.fixture');
+} = require('../../__specs__/fixtures');
 
-describe('LineIndex', () => {
-  describe('fromText', () => {
+describe('transformers/LineNumber', () => {
+  describe('modifyText', () => {
     it('returns empty array for empty texts', () => {
       expect(create('').index).toEqual([0]);
     });
@@ -17,12 +17,13 @@ describe('LineIndex', () => {
       expect(create('test').index).toEqual([0]);
     });
 
-    it('returns correct index for loreIpsum', () => {
+    it('returns correct index for loreIpsum with LF in the end', () => {
       expect(create().index).toEqual(loremIpsumIndexes);
     });
 
-    it('returns correct index for text with LF in the end', () => {
-      expect(create(loremIpsum + '\n').index).toEqual(loremIpsumIndexes);
+    it('returns correct index for text', () => {
+      expect(create(loremIpsum + '~').index)
+        .toEqual(loremIpsumIndexes.concat(2317));
     });
   });
 
@@ -91,8 +92,10 @@ describe('LineIndex', () => {
 /**
  *
  * @param {string} text
- * @return {LineIndex}
+ * @return {LineNumber}
  */
 function create(text = loremIpsum) {
-  return LineIndex.fromText(text);
+  const transformer = new LineNumber();
+  transformer.modifyText(text);
+  return transformer;
 }

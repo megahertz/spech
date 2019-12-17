@@ -62,12 +62,17 @@ class GrammarBot extends Provider {
     }
 
     return matches.map((match) => {
+      if (this.isRuleDisabled(match.rule.id)) {
+        return undefined;
+      }
+
       const suggestions = match.replacements.map(rep => rep.value);
       return {
         fragment: text.substr(match.offset, match.length),
         length: match.length,
         message: match.message,
         position: offset + match.offset,
+        rule: match.rule.id,
         suggestions,
       };
     });
@@ -91,6 +96,14 @@ class GrammarBot extends Provider {
     if (LANGUAGES[shortLang]) {
       return LANGUAGES[shortLang];
     }
+  }
+
+  isRuleDisabled(rule) {
+    if (!Array.isArray(this.options.disabledRules)) {
+      return false;
+    }
+
+    return this.options.disabledRules.includes(rule);
   }
 }
 
