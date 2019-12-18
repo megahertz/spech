@@ -139,7 +139,7 @@ function logRequest(uri, options, showBody = true) {
     return;
   }
 
-  debugFn(options.method.toUpperCase(), uri);
+  debugFn((options.method || 'get').toUpperCase(), uri);
 
   if (showBody && body) {
     let formattedBody;

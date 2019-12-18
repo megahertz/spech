@@ -210,6 +210,8 @@ class SpellChecker {
 
     document.corrections = await this.checkText(document.text, document.name);
 
+    this.logger.debug('Checking document', document.name, 'complete');
+
     return document.corrections;
   }
 
@@ -218,6 +220,8 @@ class SpellChecker {
    * @return {Promise<boolean>}
    */
   async checkDocuments() {
+    this.logger.debug('Start checking', this.documents.length, 'documents');
+
     const promises = this.documents.map(this.checkDocument, this);
     await Promise.all(promises);
 

@@ -5,8 +5,8 @@
 
 Check your text for grammar and spelling error using multiple providers.
 
-- Zero config
-- Multiple libraries/services support
+ - Zero config
+ - Multiple libraries/services support
 
 ## Usage
 
@@ -46,11 +46,12 @@ GrammarBot config:
 ### Yandex Speller
 
 Free and very fast spell checker API for en, ru and uk languages. It provides
-free 10k requests/day or 10m chars/day.
+free 10k requests/day or 10m characters/day.
 
 ## Configuring
 
 You can store configuration in two places:
+
  - spech.config.js
  - "spech" section of the package.json
 
@@ -82,10 +83,8 @@ More detailed description will be ready soon.
 
 ## Roadmap
 
-- [ ] Ignore some blocks depending on file format
-- [ ] Built-in dictionary for common JavaScript texts
-- [ ] Detect CI environment
-- [ ] Configuration docs
-- [ ] API docs
-- [ ] Read from stdin
-- [ ] Advanced reporter features
+ - [ ] Detect CI environment
+ - [ ] Configuration docs
+ - [ ] API docs
+ - [ ] Read from stdin
+ - [ ] Advanced reporter features 

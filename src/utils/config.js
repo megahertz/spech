@@ -1,6 +1,7 @@
 'use strict';
 
 const options = require('package-options');
+const path = require('path');
 
 function getConfig() {
   options.help(`
@@ -43,6 +44,7 @@ class Config {
     /** @type {string[]} */
     this.dictionaries = asStringArray([opts.dictionaries], ['*.dic']);
     this.dictionaries.push('!**/node_modules/**');
+    this.dictionaries.push(path.join(__dirname, '../common.dic'));
 
     /** @type {string} */
     this.path = opts.path || process.cwd();
@@ -114,6 +116,10 @@ function onUndefined(value, alternative) {
 }
 
 function initProviders(providers, defaults) {
+  if (typeof providers === 'string') {
+    providers = [providers];
+  }
+
   if (!Array.isArray(providers)) {
     return defaults;
   }
