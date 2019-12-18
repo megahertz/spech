@@ -87,4 +87,4 @@ More detailed description will be ready soon.
  - [ ] Configuration docs
  - [ ] API docs
  - [ ] Read from stdin
- - [ ] Advanced reporter features 
+ - [ ] Advanced reporter features

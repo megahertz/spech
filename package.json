@@ -7,8 +7,9 @@
   "scripts": {
     "start": "node src/index.js 'README.md'",
     "test": "humile",
-    "test:full": "npm run test && npm run lint",
+    "test:full": "npm run test && npm run lint && npm run spell",
     "lint": "eslint 'src/**/*.js'",
+    "spell": "src/index.js 'README.md'",
     "postversion": "git push && git push --tags",
     "preversion": "npm run test:full",
     "prepack": "npm run test:full"
