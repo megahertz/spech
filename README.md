@@ -83,7 +83,6 @@ More detailed description will be ready soon.
 
 ## Roadmap
 
- - [ ] Detect CI environment
  - [ ] Configuration docs
  - [ ] API docs
  - [ ] Read from stdin

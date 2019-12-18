@@ -56,6 +56,9 @@ class Config {
     this.log = onUndefined(opts.log, 2);
 
     /** @type {boolean} */
+    this.detectCI = onUndefined(opts.detectCi, true);
+
+    /** @type {boolean} */
     this.ignoreCase = onUndefined(opts.ignoreCase, true);
 
     /** @type {object} */

@@ -2,6 +2,7 @@
 
 'use strict';
 
+const ciJobNumber = require('ci-job-number');
 const SpellChecker = require('./SpellChecker');
 const { reporterFactory } = require('./reporters');
 const { Config, getConfig } = require('./utils/config');
@@ -18,6 +19,12 @@ if (require.main === module) {
 
 async function main() {
   const config = getConfig();
+
+  if (config.detectCI && ciJobNumber() !== 1) {
+    console.info('spech is enabled only for the first CI job');
+    return;
+  }
+
   const checker = new SpellChecker(config);
 
   await checker.addDocumentsByMask(config.path, config.documents);
