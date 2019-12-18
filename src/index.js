@@ -14,7 +14,10 @@ module.exports = {
 };
 
 if (require.main === module) {
-  main().catch(console.error);
+  main().catch((e) => {
+    console.error(e);
+    process.exitCode = 2;
+  });
 }
 
 async function main() {

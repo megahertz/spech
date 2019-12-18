@@ -31,7 +31,7 @@
   "bugs": "https://github.com/megahertz/spech/issues",
   "homepage": "https://github.com/megahertz/spech#readme",
   "engines": {
-    "node": ">=8"
+    "node": ">=10"
   },
   "devDependencies": {
     "eslint": "^6.6.0",
