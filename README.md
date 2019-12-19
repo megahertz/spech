@@ -48,7 +48,7 @@ GrammarBot config:
 Free and very fast spell checker API for en, ru and uk languages. It provides
 free 10k requests/day or 10m characters/day.
 
-## Configuring
+## [Configuring](docs/config.md)
 
 You can store configuration in two places:
 
@@ -67,6 +67,8 @@ module.exports = {
 };
 ```
 
+[More details](docs/config.md).
+
 ### Dictionaries
 You can place words/phrases which is marked as error to your dictionary file.
 Just create a file with .dic extension to the project root:
@@ -79,11 +81,10 @@ browserify
 /Component.tsx?/
 ```
 
-More detailed description will be ready soon.
+[More details](docs/config.md).
 
 ## Roadmap
 
- - [ ] Configuration docs
  - [ ] API docs
  - [ ] Read from stdin
  - [ ] Advanced reporter features
