@@ -43,6 +43,6 @@
     "ci-job-number": "^0.3.1",
     "glob": "^7.1.6",
     "hunspell-asm": "^4.0.1",
-    "package-options": "0.0.7"
+    "package-options": "^0.1.1"
   }
 }

@@ -4,6 +4,11 @@ const options = require('package-options');
 const path = require('path');
 
 function getConfig() {
+  options.boolean([
+    'colors', 'ignoreCase', 'showDuplicates', 'showProvider', 'showRule',
+    'detectCi', 'showConfig', 'showDocuments',
+  ]);
+
   options.help(`
 Usage: spech [Path patterns]
 General options:
@@ -34,7 +39,7 @@ Misc options:
 
 class Config {
   /**
-   * @param {PackageOptions || *} opts
+   * @param {PackageOptions.PackageOptions || *} opts
    */
   constructor(opts) {
     // General options
@@ -123,7 +128,7 @@ class Config {
       this.action = 'showDocuments';
     }
 
-    if (!(opts instanceof options.PackageOptions)) {
+    if (!options.getHelpText) {
       Object.assign(this, opts);
     }
   }
