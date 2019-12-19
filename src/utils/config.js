@@ -63,6 +63,11 @@ class Config {
     this.dictionaries.push(path.join(__dirname, '../common.dic'));
 
     /**
+     * @type {string[]}
+     */
+    this.dictionary = asStringArray([opts.dictionary], []);
+
+    /**
      * @type {string}
      */
     this.path = opts.path || process.cwd();

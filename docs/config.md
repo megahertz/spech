@@ -2,7 +2,7 @@
 
 spech tries to read configuration from these sources:
 
-1. `spech.config.json` *(lowest priority)*
+1. `spech.config.json` *(the lowest priority)*.
 
     Example:
     
@@ -12,7 +12,7 @@ spech tries to read configuration from these sources:
     }
     ```
 
-2. `spech.config.js`
+2. `spech.config.js`.
 
     Example:
     
@@ -22,7 +22,7 @@ spech tries to read configuration from these sources:
     };
     ```
 
-3. `spech` section of `package.json`
+3. `spech` section of `package.json`.
 
     Example:
     
@@ -36,14 +36,14 @@ spech tries to read configuration from these sources:
     }
     ```
 
-4. `SPECH_${OPTION}` Environment variables Keys transformed to camelCase
+4. `SPECH_${OPTION}` Environment variables Keys transformed to camel case.
 
     Example:
-    
+
     ```
     $ env SPECH_SHOW_PROVIDER=1 spech
     ```
-    
+
     it will be similar to the following config:
     
     ```
@@ -52,7 +52,7 @@ spech tries to read configuration from these sources:
     }
     ```
 
-5. Command line arguments *(highest priority)*
+5. Command line arguments *(the highest priority)*.
 
     ```
     $ spech --show-provider
@@ -60,7 +60,7 @@ spech tries to read configuration from these sources:
 
 You can run `spech --show-config` to view resulted configuration.
 
-If you need to know which documents are processed, run `spech --show-documents`
+If you need to know which documents are processed, run `spech --show-documents`.
 
 ## General options
 
@@ -80,6 +80,12 @@ Default: `['*.dic', '!**/node_modules/**']`
 
 Load dictionary file using glob mask
 
+#### `dictionary` {string | string[]}
+
+Default: `[]`
+
+Allow to specify some dictionary phrases without external .dic file.
+
 #### `path` {string}
 
 Default: `process.cwd()`
@@ -96,7 +102,8 @@ Default:
 ]
 ```
 
-Which providers to use. You can pass additional providers options in the object.
+Define which providers to use. You can pass additional providers options in
+the object.
 
 ## Appearance options
 

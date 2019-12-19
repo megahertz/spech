@@ -48,7 +48,12 @@ async function actionMain(config) {
   const checker = new SpellChecker(config);
 
   await checker.addDocumentsByMask(config.path, config.documents);
+
   await checker.addDictionariesByMask(config.path, config.dictionaries);
+  if (config.dictionary.length > 0) {
+    config.dictionary.forEach(checker.addDictionaryPhrase, checker);
+  }
+
   config.providers.forEach(cfg => checker.addProviderByConfig(cfg));
 
   const noErrors = await checker.checkDocuments();
