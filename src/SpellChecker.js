@@ -95,15 +95,10 @@ class SpellChecker {
    *
    * @param {string} searchPath
    * @param {string[]} masks
-   * @param {string[]} exclusionMasks
    * @return {Promise<Document[]>}
    */
-  async addDocumentsByMask(
-    searchPath,
-    masks = ['**/*.md'],
-    exclusionMasks = ['**/node_modules/**']
-  ) {
-    const finder = new FileFinder(searchPath, masks, exclusionMasks);
+  async addDocumentsByMask(searchPath, masks = ['**/*.md']) {
+    const finder = new FileFinder(searchPath, masks);
     const promises = finder.find().map((filePath) => {
       return this.addDocumentFromFile(filePath, searchPath);
     }, this);

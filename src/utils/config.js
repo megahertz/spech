@@ -7,23 +7,25 @@ function getConfig() {
   options.help(`
 Usage: spech [Path patterns]
 General options:
-  -l, --languages    Used language/languages, default 'en-us'
-  -d, --dictionaries Dictionary file patterns
-      --path STRING  Current path
-  -p, --providers    Add provider
-  -c, --ignore-case  Ignore incorrect usage of letter case
+  -l, --languages     Used language/languages, default 'en-us'
+  -d, --dictionaries  Dictionary file patterns
+      --path STRING   Current path
+  -p, --providers     Add provider
+  -c, --ignore-case   Ignore incorrect usage of letter case
   
 Appearance options:
-      --colors          Force turn on colors in spec output 
-      --no-colors       Force turn off colors in spec output
-      --show-duplicates Show duplicate corrections from different providers
-      --show-provider   Display provider name in results
-      --show-rule       Display correction rule if provider supports
-      --log NUMBER      From 0 (only errors) to 3 (debug)
+      --colors           Force turn on colors in spec output 
+      --no-colors        Force turn off colors in spec output
+      --show-duplicates  Show duplicate corrections from different providers
+      --show-provider    Display provider name in results
+      --show-rule        Display correction rule if provider supports
+      --log NUMBER       From 0 (only errors) to 3 (debug)
      
-Misc options:            
-      --version Show version
-      --help    Show this help message
+Misc options:
+      --show-config     Show the current config object and exit
+      --show-documents  Show a list of all found documents files and exit
+      --version         Show version
+      --help            Show this help message
   `);
 
   return new Config(options);
@@ -34,14 +36,22 @@ class Config {
    * @param {PackageOptions || *} opts
    */
   constructor(opts) {
-    /** @type {string[]} */
-    this.languages = asStringArray([opts.languages], ['en-us']);
+    // General options
 
-    /** @type {string[]} */
+    /**
+     * @type {string[]}
+     */
     this.documents = asStringArray([opts._, opts.documents], ['**/*.md']);
     this.documents.push('!**/node_modules/**');
 
-    /** @type {string[]} */
+    /**
+     * @type {string[]}
+     */
+    this.languages = asStringArray([opts.languages], ['en-us']);
+
+    /**
+     * @type {string[]}
+     */
     this.dictionaries = asStringArray([opts.dictionaries], ['*.dic']);
     this.dictionaries.push('!**/node_modules/**');
     this.dictionaries.push(path.join(__dirname, '../common.dic'));
@@ -56,7 +66,7 @@ class Config {
     this.log = onUndefined(opts.log, 2);
 
     /** @type {boolean} */
-    this.detectCI = onUndefined(opts.detectCi, true);
+    this.detectCi = onUndefined(opts.detectCi, true);
 
     /** @type {boolean} */
     this.ignoreCase = onUndefined(opts.ignoreCase, true);
@@ -84,6 +94,14 @@ class Config {
 
     if (!(opts instanceof options.PackageOptions)) {
       Object.assign(this, opts);
+    }
+
+    /** @type { 'main' | 'showConfig' | 'showDocuments' } */
+    this.action = 'main';
+    if (opts.showConfig) {
+      this.action = 'showConfig';
+    } else if (opts.showDocuments) {
+      this.action = 'showDocuments';
     }
   }
 }

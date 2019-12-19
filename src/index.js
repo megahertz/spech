@@ -6,6 +6,7 @@ const ciJobNumber = require('ci-job-number');
 const SpellChecker = require('./SpellChecker');
 const { reporterFactory } = require('./reporters');
 const { Config, getConfig } = require('./utils/config');
+const FileFinder = require('./utils/FileFinder');
 const Printer = require('./utils/Printer');
 
 module.exports = {
@@ -16,18 +17,34 @@ module.exports = {
 if (require.main === module) {
   main().catch((e) => {
     console.error(e);
-    process.exitCode = 2;
+    process.exit(2);
   });
 }
 
 async function main() {
   const config = getConfig();
 
-  if (config.detectCI && ciJobNumber() !== 1) {
-    console.info('spech is enabled only for the first CI job');
-    return;
+  if (config.detectCi && ciJobNumber() !== 1) {
+    actionCiSecondJob();
   }
 
+  switch (config.action) {
+    case 'showConfig': return actionShowConfig(config);
+    case 'showDocuments': return actionShowDocuments(config);
+    default: return actionMain(config);
+  }
+}
+
+function actionCiSecondJob() {
+  console.info('spech is enabled only for the first CI job');
+  process.exit(0);
+}
+
+/**
+ * @param {Config} config
+ * @return {Promise<void>}
+ */
+async function actionMain(config) {
   const checker = new SpellChecker(config);
 
   await checker.addDocumentsByMask(config.path, config.documents);
@@ -42,4 +59,21 @@ async function main() {
   printer.batch(reporter.print(checker.documents));
 
   process.exitCode = noErrors ? 0 : 1;
+}
+
+/**
+ * @param {Config} config
+ * @return {Promise<void>}
+ */
+function actionShowConfig(config) {
+  console.info(config);
+}
+
+/**
+ * @param {Config} config
+ * @return {Promise<void>}
+ */
+function actionShowDocuments(config) {
+  const finder = new FileFinder(config.path, config.documents);
+  console.info(finder.find());
 }
