@@ -36,7 +36,7 @@ function format(formatOrFileName) {
 
   let formatType = formatOrFileName;
 
-  if (formatOrFileName.match(/\w+\.\w+/)) {
+  if (formatOrFileName.match(/.*?\.\w+/)) {
     formatType = path.extname(formatOrFileName).substr(1).toLowerCase();
   }
 

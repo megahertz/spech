@@ -92,6 +92,37 @@ class SpellChecker {
   }
 
   /**
+   * @param {string} format
+   * @param {module:tty.ReadStream} stream
+   * @return {Promise<Document | null>}
+   */
+  async addDocumentFromStream(format = 'md', stream = process.stdin) {
+    if (stream.isTTY) {
+      return null;
+    }
+
+    stream.setEncoding('utf8');
+
+    return new Promise((resolve) => {
+      let result = '';
+
+      stream
+        .on('readable', () => {
+          let chunk;
+          // eslint-disable-next-line no-cond-assign
+          while ((chunk = stream.read()) !== null) {
+            result += chunk;
+          }
+        })
+        .on('end', () => {
+          const document = new Document('<STDIN>.' + format, result);
+          this.addDocument(document);
+          resolve(document);
+        });
+    });
+  }
+
+  /**
    *
    * @param {string} searchPath
    * @param {string[]} masks

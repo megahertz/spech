@@ -110,8 +110,3 @@ async function getMistakes() {
   return corrections.map(correction => correction.fragment);
 }
 ```
-
-## Roadmap
-
- - [ ] Read from stdin
- - [ ] Advanced reporter features
