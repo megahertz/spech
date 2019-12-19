@@ -81,10 +81,37 @@ browserify
 /Component.tsx?/
 ```
 
-[More details](docs/config.md).
+[More details](docs/config.md#dictionaries-string--string).
+
+## API Usage
+
+The most useful parts of the library are available through facade class
+[SpellChecker](src/SpellChecker.js).
+
+Here is a simple example how it can be used:
+
+```js
+const { Config, SpellChecker } = require('spech');
+
+async function getMistakes() {
+  const config = new Config({ ignoreCase: false });
+  const checker = new SpellChecker(config);
+
+  await checker.addDocumentsByMask(process.cwd(), 'docs/*.md');
+  checker.addDictionaryPhrase('exceptionphrase');
+  checker.addProviderByConfig({ name: 'hunspell' });
+
+  const noMistakes = await checker.checkDocuments();
+  if (noMistakes) {
+    return [];
+  }
+  
+  const corrections = checker.documents.map(doc => doc.corrections).flat();
+  return corrections.map(correction => correction.fragment);
+}
+```
 
 ## Roadmap
 
- - [ ] API docs
  - [ ] Read from stdin
  - [ ] Advanced reporter features

@@ -4,11 +4,13 @@ import HttpClient = require('./providers/helpers/http/HttpClient');
 import LoggerClass = require('./utils/Logger');
 import text = require('./providers/helpers/text');
 import ProviderClass = require('./providers/Provider');
+import SpellCheckerClass = require('./SpellChecker');
 
 declare namespace Spech {
   type Document = DocumentClass;
   type Logger = LoggerClass;
   type Provider = ProviderClass;
+  type SpellChecker = SpellCheckerClass;
 
   interface HttpOptions {
     timeout?: number;
