@@ -9,21 +9,22 @@ Usage: spech [Path patterns]
 General options:
   -l, --languages     Used language/languages, default 'en-us'
   -d, --dictionaries  Dictionary file patterns
-      --path STRING   Current path
-  -p, --providers     Add provider
-  -c, --ignore-case   Ignore incorrect usage of letter case
+      --path          Current path
+  -p, --providers     Add provider/providers
   
 Appearance options:
-      --colors           Force turn on colors in spec output 
-      --no-colors        Force turn off colors in spec output
-      --show-duplicates  Show duplicate corrections from different providers
+      --colors           Force turn on colors in spec output
+      --log              Verbosity, from 0 (only errors) to 3 (debug)
+  -c, --ignore-case      Ignore incorrect usage of letter case
+      --show-duplicates  Show duplicate corrections
       --show-provider    Display provider name in results
       --show-rule        Display correction rule if provider supports
-      --log NUMBER       From 0 (only errors) to 3 (debug)
-     
+      
 Misc options:
+      --detect-ci       Run only in the first CI task
       --show-config     Show the current config object and exit
       --show-documents  Show a list of all found documents files and exit
+      --timeout         Connection timeout for providers 
       --version         Show version
       --help            Show this help message
   `);
@@ -56,35 +57,39 @@ class Config {
     this.dictionaries.push('!**/node_modules/**');
     this.dictionaries.push(path.join(__dirname, '../common.dic'));
 
-    /** @type {string} */
+    /**
+     * @type {string}
+     */
     this.path = opts.path || process.cwd();
 
-    /** @type {boolean} */
-    this.colors = onUndefined(opts.colors, process.stdout.isTTY);
-
-    /** @type {number} */
-    this.log = onUndefined(opts.log, 2);
-
-    /** @type {boolean} */
-    this.detectCi = onUndefined(opts.detectCi, true);
-
-    /** @type {boolean} */
-    this.ignoreCase = onUndefined(opts.ignoreCase, true);
-
-    /** @type {object} */
-    this.httpConfig = {
-      connectionLimit: opts.connectionLimit || 10,
-      timeout: opts.timeout || 10000,
-      retryCount:  opts.retryCount || 5,
-    };
-
-    /** {*[]} */
+    /**
+     * @type {*[]}
+     */
     this.providers = initProviders(opts.providers, [
       { name: 'hunspell' },
       { name: 'grammarBot' },
     ]);
 
-    /** @type {Spech.ReporterOptions} */
+    // Appearance options
+
+    /**
+     * @type {boolean}
+     */
+    this.colors = onUndefined(opts.colors, process.stdout.isTTY);
+
+    /**
+     * @type {number}
+     */
+    this.log = onUndefined(opts.log, 0);
+
+    /**
+     * @type {boolean}
+     */
+    this.ignoreCase = onUndefined(opts.ignoreCase, true);
+
+    /**
+     * @type {Spech.ReporterOptions}
+     */
     this.reporterConfig = {
       showDuplicates: onUndefined(opts.showDuplicates, this.log > 1),
       showProvider: onUndefined(opts.showProvider, this.log > 0),
@@ -92,16 +97,34 @@ class Config {
       providerOrder: this.providers.map(p => p.name),
     };
 
-    if (!(opts instanceof options.PackageOptions)) {
-      Object.assign(this, opts);
-    }
+    // Misc options
 
-    /** @type { 'main' | 'showConfig' | 'showDocuments' } */
+    /**
+     * @type {boolean}
+     */
+    this.detectCi = onUndefined(opts.detectCi, true);
+
+    /**
+     @type {object}
+     */
+    this.httpConfig = {
+      connectionLimit: opts.connectionLimit || 10,
+      timeout: opts.timeout || 10000,
+      retryCount:  opts.retryCount || 5,
+    };
+
+    /**
+     * @type { 'main' | 'showConfig' | 'showDocuments' }
+     */
     this.action = 'main';
     if (opts.showConfig) {
       this.action = 'showConfig';
     } else if (opts.showDocuments) {
       this.action = 'showDocuments';
+    }
+
+    if (!(opts instanceof options.PackageOptions)) {
+      Object.assign(this, opts);
     }
   }
 }
