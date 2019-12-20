@@ -226,7 +226,10 @@ class SpellChecker {
    * @return {Promise<boolean>}
    */
   async checkDocuments() {
-    this.logger.debug('Start checking', this.documents.length, 'documents');
+    const count = this.documents.length;
+    this.logger.debug(
+      `Start checking ${count} document${count === 1 ? '' : 's'}`
+    );
 
     const promises = this.documents.map(this.checkDocument, this);
     await Promise.all(promises);
