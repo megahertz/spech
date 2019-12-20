@@ -10,6 +10,8 @@ Check your text for grammar and spelling mistakes using multiple providers
  - Zero config
  - Can work offline (only with Hunspell provider)
 
+![Screenshot](docs/img/screenshot.png)
+
 ## Usage
 
 ### Files checking
