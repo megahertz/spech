@@ -20,22 +20,29 @@ class Loader {
    * @param {boolean} useCache
    */
   async load(httpClient, useCache = true) {
+    let dictionary;
+
     if (this.language === 'en-us') {
       const enPath = path.join(__dirname, 'hunspell-dict-en-us');
-      const dictionary = await this.loadFromDir(enPath);
+      dictionary = await this.loadFromDir(enPath);
       if (dictionary) {
         return dictionary;
       }
+    }
+
+    dictionary = await this.loadFromPackage();
+    if (dictionary) {
+      return dictionary;
     }
 
     if (useCache) {
-      const dictionary = await this.loadFromCache();
+      dictionary = await this.loadFromCache();
       if (dictionary) {
         return dictionary;
       }
     }
 
-    const dictionary = await this.loadFromHttp(httpClient);
+    dictionary = await this.loadFromHttp(httpClient);
     if (dictionary && useCache) {
       await this.saveCache(dictionary);
     }
@@ -64,9 +71,33 @@ class Loader {
     }
   }
 
+  async loadFromPackage() {
+    const packageName = `hunspell-dict-${this.language}`;
+
+    let packagePath;
+    try {
+      packagePath = path.dirname(
+        require.resolve(`${packageName}/package.json`)
+      );
+      this.logDebug(
+        `Loading dictionary ${this.language} from the package ${packageName}`
+      );
+    } catch (e) {
+      packagePath = null;
+      this.logInfo(
+        `Package ${packageName} isn't installed.`
+          + ' You could install it to prevent implicit downloading'
+      );
+    }
+
+    if (packagePath) {
+      return this.loadFromDir(packagePath);
+    }
+  }
+
   async loadFromCache() {
     const dictPath = getCachePath(
-      path.join('dictionaries', 'hunspell-dict-' + this.language)
+      path.join('dictionaries', `hunspell-dict-${this.language}`)
     );
 
     return this.loadFromDir(dictPath, false);

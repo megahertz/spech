@@ -22,7 +22,11 @@ variety of languages. The checker uses WebAssembly binding for hunspell
 'vi'
 
 'en-us' language is built-in. All other languages are downloaded from 
-unpkg.com by demand.
+unpkg.com by demand. 
+
+If you would like to permanently add some dictionary for your project, run:
+
+`npm install --save-dev hunspell-dict-${LANGUAGE}`
 
 ## Options
 
