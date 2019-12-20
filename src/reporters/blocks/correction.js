@@ -16,7 +16,7 @@ function correctionFactory({ showProvider = false, showRule = false } = {}) {
       { text: `${line}:${pos} `, color: 'gray' },
     ];
 
-    if (correction.provider) {
+    if (correction.provider && showProvider) {
       result.push({ text: `[${correction.provider}] `, color: 'gray' });
     }
 

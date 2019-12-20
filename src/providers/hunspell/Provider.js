@@ -33,6 +33,9 @@ class Provider extends AbstractProvider {
 
     this.name = 'hunspell';
 
+    /**
+     * @type {Promise<Hunspell>}
+     */
     this.hunspellInstances = {};
   }
 
@@ -120,7 +123,7 @@ class Provider extends AbstractProvider {
    */
   async getHunspell(language) {
     if (!this.hunspellInstances[language]) {
-      this.hunspellInstances[language] = await this.createHunspell(language);
+      this.hunspellInstances[language] = this.createHunspell(language);
     }
 
     return this.hunspellInstances[language];
