@@ -4,6 +4,15 @@ const { loadModule } = require('hunspell-asm');
 const AbstractProvider = require('../Provider');
 const { loadDictionary, normalizeLanguage } = require('./dictionaries');
 
+const CC_IGNORE = 1;
+const CC_SPLIT = 2;
+const CC_CHECK = 3;
+
+const CC_MAP = {
+  ignore: CC_IGNORE,
+  split: CC_SPLIT,
+  check: CC_CHECK,
+};
 
 class Provider extends AbstractProvider {
   /**
@@ -15,8 +24,11 @@ class Provider extends AbstractProvider {
     this.httpClient = helpers.createHttpClient();
     this.httpClient.on('error', this.logger.callback('hunspell:', 'info'));
 
-    if (this.options.splitCamelCaseWords === undefined) {
-      this.options.splitCamelCaseWords = true;
+    const ccString = this.options.camelCaseBehavior;
+    this.options.camelCaseBehavior = CC_MAP[ccString] || CC_IGNORE;
+
+    if (this.options.useCache === undefined) {
+      this.options.useCache = !process.env.CI;
     }
 
     this.name = 'hunspell';
@@ -31,7 +43,7 @@ class Provider extends AbstractProvider {
    */
   async check(text, languages) {
     const hunspellInstances = await this.getHunspellForAllLanguages(languages);
-    const words = splitText(text, this.options.splitCamelCaseWords);
+    const words = splitText(text, this.options.camelCaseBehavior);
 
     return words.reduce((warnings, { word, position }) => {
       const suggestions = this.checkWord(word, hunspellInstances);
@@ -123,7 +135,7 @@ class Provider extends AbstractProvider {
     const dictionary = await loadDictionary(
       language,
       this.httpClient,
-      true,
+      !process.env.CI,
       this.logger
     );
 
@@ -137,7 +149,7 @@ class Provider extends AbstractProvider {
   }
 }
 
-function splitText(text, splitCamelCase = true) {
+function splitText(text, camelCaseBehavior = CC_IGNORE) {
   let words = [];
   const wordRegExp = /\p{L}+/ug;
 
@@ -148,12 +160,20 @@ function splitText(text, splitCamelCase = true) {
       break;
     }
 
-    if (splitCamelCase) {
-      words = words.concat(splitCamelCaseWord(word, position));
+    if (camelCaseBehavior === CC_CHECK) {
+      words.push({ word, position });
       continue;
     }
 
-    words.push({ word, position });
+    const parts = splitCamelCaseWord(word, position);
+    if (parts.length < 2) {
+      words.push({ word, position });
+      continue;
+    }
+
+    if (camelCaseBehavior === CC_SPLIT) {
+      words = words.concat(parts);
+    }
   }
 
   return words;
