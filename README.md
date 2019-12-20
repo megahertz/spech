@@ -5,26 +5,25 @@
 
 Check your text for grammar and spelling mistakes using multiple providers
 
+ - Multiple libraries/services for grammar and spelling checking
+ - Multilingual document support
  - Zero config
- - Multiple libraries/services support
+ - Can work offline (only with Hunspell provider)
 
 ## Usage
 
 ### Files checking
 
-`npx spech`
+`npx spech README.md`
 
-By default, it finds `**/*.md` files and checks it using en-US language.
-
-Use `-l` flag to specify another language:
+File name can be omitted, by default it searches files by `**/*.md` mask.
+Default language is English, it can be changed with `-l` flag: 
 
 `spech -l ru`
 
-To specify file mask directly, pass it as an argument:
+`spech -l ru-RU -l en-US` - for multilingual documents
 
-`spech README.md 'docs/*.md'`
-
-### String checking
+### String and STDIN checking
 
 You can check a string value using STDIN or --input argument
 
@@ -33,6 +32,12 @@ You can check a string value using STDIN or --input argument
 `spech --input 'Check the text'`
 
 ## Providers
+
+To configure a provider pass `-p` flag:
+
+`spech -p hunspell -p yandex`
+
+Other options can be set in a config file. 
 
 ### Hunspell
 
@@ -58,7 +63,7 @@ free 10k requests/day or 10m characters/day.
 
 ## [Configuring](docs/config.md)
 
-You can store configuration in two places:
+Configuration can be stored in:
 
  - spech.config.js
  - "spech" section of the package.json
@@ -78,8 +83,8 @@ module.exports = {
 [More details](docs/config.md).
 
 ### Dictionaries
-You can place words/phrases which are marked as a mistake into your dictionary
-file. Just create a file with .dic extension in your project root:
+It's possible to add words which are marked as a mistake into a dictionary file.
+Just create a file with .dic extension in your project root:
 
 mydictionary.dic
 ```
