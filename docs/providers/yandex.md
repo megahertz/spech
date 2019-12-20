@@ -6,7 +6,7 @@ free 10k requests/day or 10m characters/day.
  - Free API
  - Almost unlimited
  - Multilingual document support
- - Pretty fast, sometimes event faster than local hunspell when using hi-speed
+ - Pretty fast, sometimes even faster than local hunspell when using hi-speed
    internet connection.
  
  - Requires internet connection
@@ -17,7 +17,7 @@ free 10k requests/day or 10m characters/day.
 
 ## Languages
 
-'ru', 'en', 'uk'
+`ru en uk`
 
 ## Options
 

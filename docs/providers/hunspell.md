@@ -14,15 +14,16 @@ variety of languages. The checker uses WebAssembly binding for hunspell
 
 ## Languages
 
-'bg-bg', 'ca-es', 'cs-cz', 'da-dk', 'de-at', 'de-ch', 'de-de', 'el-gr',
-'en-au', 'en-ca', 'en-gb', 'en-us', 'es-es', 'et-ee', 'fa-ir', 'fo-fo',
-'fr-fr', 'he-il', 'hr-hr', 'hu-hu', 'it-it', 'ko', 'lt-lt', 'lv-lv',
-'nb-no', 'nl-nl', 'pl-pl', 'pt-br', 'pt-pt', 'ro-ro', 'ru-ru', 'sk-sk',
-'sl-si', 'sr-latn', 'sr', 'sv-se', 'ta-in', 'tg-tg', 'tr', 'uk-ua',
-'vi'
+```
+bg-bg ca-es   cs-cz da-dk de-at de-ch de-de el-gr
+en-au en-ca   en-gb en-us es-es et-ee fa-ir fo-fo
+fr-fr he-il   hr-hr hu-hu it-it ko    lt-lt lv-lv,
+nb-no nl-nl   pl-pl pt-br pt-pt ro-ro ru-ru sk-sk
+sl-si sr-latn sr    sv-se ta-in tg-tg tr    uk-ua
+vi
+```
 
-'en-us' language is built-in. All other languages are downloaded from 
-unpkg.com by demand. 
+`en-us` language is built-in. All other languages are downloaded by demand. 
 
 If you would like to permanently add some dictionary for your project, run:
 
@@ -30,7 +31,7 @@ If you would like to permanently add some dictionary for your project, run:
 
 ## Options
 
-#### `camelCaseBehavior` { 'ignore' | 'split' | 'check' }
+#### `camelCaseBehavior` {'ignore' | 'split' | 'check'}
 
 Default: `'ignore'`
 

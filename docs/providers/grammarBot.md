@@ -20,7 +20,7 @@ If you need more that 100 request per day,
 
 ## Languages
 
-'en-us', 'en-gb'
+`en-us en-gb`
 
 ## Options
 
@@ -28,7 +28,7 @@ If you need more that 100 request per day,
 
 Default: `undefined`
 
-With `apiKey` set you are able to perform up to 250 request/day instead of 100.
+With API key you are able to perform up to 250 request/day instead of 100.
 
 #### `disabledRules` {string[]}
 
