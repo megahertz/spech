@@ -10,13 +10,27 @@ Check your text for grammar and spelling error using multiple providers.
 
 ## Usage
 
+### Files checking
+
 `npx spech`
 
 By default, it finds `**/*.md` files and checks it using en-US language.
 
 Use `-l` flag to specify another language:
 
-`npx spech -l ru`
+`spech -l ru`
+
+To specify file mask directly, pass it as argument:
+
+`spech README.md 'docs/*.md'`
+
+### String checking
+
+You can check a string value using STDIN or --input argument
+
+`cat README.md | spech`
+
+`spech --input 'Check the text'`
 
 ## Providers
 

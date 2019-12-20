@@ -16,6 +16,7 @@ General options:
   -d, --dictionaries  Dictionary file patterns
       --path          Current path
   -p, --providers     Add provider/providers
+  -i, --input         Pass text for checking directly
   
 Appearance options:
       --colors           Force turn on colors in spec output
@@ -80,6 +81,11 @@ class Config {
       { name: 'grammarBot' },
     ]);
 
+    /**
+     * @type {string}
+     */
+    this.input = opts.input;
+
     // Appearance options
 
     /**
@@ -133,6 +139,11 @@ class Config {
       this.action = 'showDocuments';
     }
 
+    /**
+     * @type {Promise<{name: string, content: string} | null>}
+     */
+    this.inputDocumentPromise = getInputDocument(opts);
+
     if (!options.getHelpText) {
       Object.assign(this, opts);
     }
@@ -179,4 +190,45 @@ function initProviders(providers, defaults) {
   }
 
   return providers.map(p => typeof p === 'string' ? { name: p } : p);
+}
+
+async function getInputDocument(opts) {
+  const stdin = await getTextFromStdin();
+  const format = opts.format || 'md';
+
+  if (stdin) {
+    return { name: `<STDIN>.${format}`, content: stdin };
+  }
+
+  if (opts.input) {
+    return { name: `<INPUT>.${format}`, content: opts.input };
+  }
+
+  return null;
+}
+
+/**
+ * @param {module:tty.ReadStream} stream
+ * @return {Promise<string | null>}
+ */
+async function getTextFromStdin(stream = process.stdin) {
+  if (stream.isTTY) {
+    return null;
+  }
+
+  stream.setEncoding('utf8');
+
+  return new Promise((resolve) => {
+    let result = '';
+
+    stream
+      .on('readable', () => {
+        let chunk;
+        // eslint-disable-next-line no-cond-assign
+        while ((chunk = stream.read()) !== null) {
+          result += chunk;
+        }
+      })
+      .on('end', () => resolve(result));
+  });
 }

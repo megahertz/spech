@@ -47,8 +47,10 @@ function actionCiSecondJob() {
 async function actionMain(config) {
   const checker = new SpellChecker(config);
 
-  const stdinDoc = await checker.addDocumentFromStream();
-  if (!stdinDoc) {
+  const inputDocument = await config.inputDocumentPromise;
+  if (inputDocument) {
+    checker.addDocumentFromString(inputDocument.name, inputDocument.content);
+  } else {
     await checker.addDocumentsByMask(config.path, config.documents);
   }
 
