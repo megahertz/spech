@@ -3,7 +3,7 @@
 [![Build Status](https://travis-ci.org/megahertz/spech.svg?branch=master)](https://travis-ci.org/megahertz/spech)
 [![NPM version](https://badge.fury.io/js/spech.svg)](https://badge.fury.io/js/spech)
 
-Check your text for grammar and spelling error using multiple providers.
+Check your text for grammar and spelling mistakes using multiple providers
 
  - Zero config
  - Multiple libraries/services support
@@ -20,7 +20,7 @@ Use `-l` flag to specify another language:
 
 `spech -l ru`
 
-To specify file mask directly, pass it as argument:
+To specify file mask directly, pass it as an argument:
 
 `spech README.md 'docs/*.md'`
 
@@ -37,8 +37,9 @@ You can check a string value using STDIN or --input argument
 ### Hunspell
 
 Hunspell is the most popular open-source spell checker which supports a great
-variety of languages. The checker uses WebAssembly binding for hunspell
-[hunspell-asm](https://github.com/kwonoj/hunspell-asm).
+variety of languages.
+
+[Read more](docs/providers/hunspell.md).
 
 ### GrammarBot
 
@@ -46,21 +47,14 @@ Free grammar checking API. With an API key, you can receive 250 requests/day
 (~7500/mo) at no cost. Without an API key, requests are limited to 100 per
 day per IP address (~3000/mo). The API supports only English (en-US and en-GB).
 
-If you need more that 100 request per day,
-[register](https://www.grammarbot.io/signup) a new key and pass it to
-GrammarBot config: 
-
-```
-{
-  name: 'grammarBot',
-  apiKey: 'YOUKEY,
-}
-```
+[Read more](docs/providers/grammarBot.md).
 
 ### Yandex Speller
 
 Free and very fast spell checker API for en, ru and uk languages. It provides
 free 10k requests/day or 10m characters/day.
+
+[Read more](docs/providers/yandex.md).
 
 ## [Configuring](docs/config.md)
 
@@ -84,8 +78,8 @@ module.exports = {
 [More details](docs/config.md).
 
 ### Dictionaries
-You can place words/phrases which is marked as error to your dictionary file.
-Just create a file with .dic extension to the project root:
+You can place words/phrases which are marked as a mistake into your dictionary
+file. Just create a file with .dic extension in your project root:
 
 mydictionary.dic
 ```
