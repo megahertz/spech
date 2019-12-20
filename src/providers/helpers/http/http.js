@@ -161,10 +161,12 @@ function logResponse(uri, options, response) {
     return;
   }
 
-  response.asJson().then((json) => {
-    logRequest(uri, options, false);
-    debugFn('Response body:', json);
-  });
+  response.asJson()
+    .then((json) => {
+      logRequest(uri, options, false);
+      debugFn('Response body:', json);
+    })
+    .catch(e => null);
 }
 
 /**

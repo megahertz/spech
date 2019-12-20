@@ -73,7 +73,7 @@ class Provider extends AbstractProvider {
    */
   async getHunspell(language) {
     if (!this.hunspellInstances[language]) {
-      this.hunspellInstances[language] = this.createHunspell(language);
+      this.hunspellInstances[language] = await this.createHunspell(language);
     }
 
     return this.hunspellInstances[language];
@@ -85,7 +85,6 @@ class Provider extends AbstractProvider {
    * @private
    */
   async createHunspell(language) {
-    const hunspellFactory = await loadModule();
     const dictionary = await loadDictionary(
       language,
       this.httpClient,
@@ -93,6 +92,7 @@ class Provider extends AbstractProvider {
       this.logger
     );
 
+    const hunspellFactory = await loadModule();
     const paths = {
       aff: hunspellFactory.mountBuffer(dictionary.aff, `${language}.aff`),
       dic: hunspellFactory.mountBuffer(dictionary.dic, `${language}.dic`),

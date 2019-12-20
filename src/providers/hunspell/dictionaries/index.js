@@ -30,13 +30,13 @@ module.exports = {
  * @param {string} language
  * @param {HttpClient} httpClient
  * @param {boolean} useCache
- * @param {Spech.Logger} logger
+ * @param {Logger} logger
  * @return {Promise<{aff: Buffer, dic: Buffer}>}
  */
 async function loadDictionary(
   language,
   httpClient,
-  useCache = false,
+  useCache = true,
   logger = null
 ) {
   const exactLang = normalizeLanguage(language);

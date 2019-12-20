@@ -47,10 +47,10 @@ function getCachePath(subDir = '') {
 
     default: {
       if (process.env.XDG_CACHE_HOME) {
-        return path.join(process.env.XDG_CACHE_HOME, name);
+        return path.join(process.env.XDG_CACHE_HOME, targetSubDir);
       }
 
-      return path.join(home, '.cache', name);
+      return path.join(home, '.cache', targetSubDir);
     }
   }
 }

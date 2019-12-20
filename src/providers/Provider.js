@@ -23,7 +23,7 @@ class Provider {
     this.options = options || {};
 
     /**
-     * @type {Spech.Logger}
+     * @type {Logger | Spech.Logger}
      */
     this.logger = helpers.logger;
   }

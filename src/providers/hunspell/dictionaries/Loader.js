@@ -19,7 +19,7 @@ class Loader {
    * @param {HttpClient} httpClient
    * @param {boolean} useCache
    */
-  async load(httpClient, useCache = false) {
+  async load(httpClient, useCache = true) {
     if (this.language === 'en-us') {
       const enPath = path.join(__dirname, 'hunspell-dict-en-us');
       const dictionary = await this.loadFromDir(enPath);
@@ -37,7 +37,7 @@ class Loader {
 
     const dictionary = await this.loadFromHttp(httpClient);
     if (dictionary && useCache) {
-      this.saveCache(dictionary);
+      await this.saveCache(dictionary);
     }
 
     return dictionary;
@@ -73,13 +73,12 @@ class Loader {
   }
 
   /**
-   * @param {string} language
    * @param {HttpClient} httpClient
    * @return {Promise<{aff: Buffer, dic: Buffer}>}
    */
   async loadFromHttp(httpClient) {
     const lang = this.language;
-    const packageUrl = `https://unpkg.com/hunspell-dict-${lang}/${lang}`;
+    const packageUrl = `https://unpkg.com/hunspell-dict-${lang}`;
 
     this.logInfo(`Downloading dictionary ${packageUrl}`);
 
