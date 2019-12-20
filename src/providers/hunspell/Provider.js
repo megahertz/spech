@@ -30,20 +30,14 @@ class Provider extends AbstractProvider {
    * @return {Spech.ProviderResult}
    */
   async check(text, languages) {
-    const normalizedLanguages = this.normalizeLanguages(languages);
-    if (normalizedLanguages.length < 1) {
-      return [];
-    }
-
-    const hunspell = await this.getHunspell(languages[0]);
+    const hunspellInstances = await this.getHunspellForAllLanguages(languages);
     const words = splitText(text, this.options.splitCamelCaseWords);
 
     return words.reduce((warnings, { word, position }) => {
-      if (hunspell.spell(word)) {
+      const suggestions = this.checkWord(word, hunspellInstances);
+      if (!suggestions) {
         return warnings;
       }
-
-      const suggestions = hunspell.suggest(word);
 
       warnings.push({
         position,
@@ -57,6 +51,28 @@ class Provider extends AbstractProvider {
   }
 
   /**
+   *
+   * @param {string} word
+   * @param {Hunspell[]} instances
+   * @return {null | string[]}
+   */
+  checkWord(word, instances) {
+    let suggestions = [];
+
+    for (const hunspell of instances) {
+      if (hunspell.spell(word)) {
+        return null;
+      }
+    }
+
+    for (const hunspell of instances) {
+      suggestions = suggestions.concat(hunspell.suggest(word));
+    }
+
+    return suggestions;
+  }
+
+  /**
    * @param {string} language
    * @return {string | undefined}
    * @protected
@@ -64,6 +80,25 @@ class Provider extends AbstractProvider {
    */
   normalizeLanguage(language) {
     return normalizeLanguage(language);
+  }
+
+  /**
+   * @param languages
+   * @return {Promise<Hunspell[]>}
+   * @private
+   */
+  async getHunspellForAllLanguages(languages) {
+    const normalizedLanguages = this.normalizeLanguages(languages);
+    if (normalizedLanguages.length < 1) {
+      return [];
+    }
+
+    const instances = [];
+    for (const lang of normalizedLanguages) {
+      instances.push(await this.getHunspell(lang));
+    }
+
+    return instances;
   }
 
   /**

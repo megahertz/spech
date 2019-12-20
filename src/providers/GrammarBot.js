@@ -90,7 +90,7 @@ class GrammarBot extends Provider {
       .replace('/_/g', '-');
 
     if (shortLang === 'en') {
-      return 'en_US';
+      return 'en-US';
     }
 
     if (LANGUAGES[shortLang]) {

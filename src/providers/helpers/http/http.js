@@ -57,7 +57,13 @@ class Response {
    */
   async asJson() {
     const content = await this.asString();
-    return JSON.parse(content);
+    try {
+      return JSON.parse(content);
+    } catch (e) {
+      throw new Error(
+        'Unable to parse JSON response: ' + e.message + '\n' + content
+      );
+    }
   }
 
   /**
