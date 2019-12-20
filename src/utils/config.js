@@ -60,7 +60,6 @@ class Config {
      * @type {string[]}
      */
     this.dictionaries = asStringArray([opts.dictionaries], ['*.dic']);
-    this.dictionaries.push('!**/node_modules/**');
     this.dictionaries.push(path.join(__dirname, '../common.dic'));
 
     /**
