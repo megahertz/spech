@@ -13,18 +13,6 @@ class CorrectionList {
   }
 
   /**
-   * @param {Dictionary} dictionary
-   * @return {this}
-   */
-  filterByDictionary(dictionary) {
-    const corrections = this.items.filter((correction) => {
-      return !dictionary.includes(correction.fragment);
-    });
-
-    return new this.constructor(corrections);
-  }
-
-  /**
    * @param {string[]} providerOrder
    * @return {this}
    */
