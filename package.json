@@ -19,6 +19,13 @@
     "src/*",
     "!__specs__"
   ],
+  "humile": {
+    "style": {
+      "diff": {
+        "maxDepth": 4
+      }
+    }
+  },
   "keywords": [
     "spell checker",
     "grammar checker",

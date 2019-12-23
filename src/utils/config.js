@@ -22,6 +22,7 @@ Appearance options:
       --colors           Force turn on colors in spec output
       --log              Verbosity, from 0 (only errors) to 3 (debug)
   -c, --ignore-case      Ignore incorrect usage of letter case
+  -r, --reporter         default, texts
       --show-duplicates  Show duplicate corrections
       --show-provider    Display provider name in results
       --show-rule        Display correction rule if provider supports
@@ -106,6 +107,9 @@ class Config {
      * @type {Spech.ReporterOptions}
      */
     this.reporterConfig = {
+      colors: this.colors,
+      name: opts.reporter,
+      numberOfLines: opts.numberOfLines || 5,
       showDuplicates: onUndefined(opts.showDuplicates, this.log > 1),
       showProvider: onUndefined(opts.showProvider, this.log > 0),
       showRule: onUndefined(opts.showRule, this.log > 1),

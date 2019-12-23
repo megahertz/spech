@@ -5,7 +5,11 @@ class CorrectionList {
    * @param {Correction[]} corrections
    */
   constructor(corrections = []) {
-    this.items = corrections;
+    if (corrections instanceof this.constructor) {
+      this.items = corrections.items;
+    } else {
+      this.items = corrections;
+    }
   }
 
   get length() {
@@ -44,21 +48,16 @@ class CorrectionList {
   }
 
   /**
-   * @return {Object<number, Correction[]>}
+   * @param {CorrectionList | Correction[]} corrections
+   * @return {this}
    */
-  asLines() {
-    const lines = {};
+  concat(corrections) {
+    let items = corrections;
+    if (corrections instanceof this.constructor) {
+      items = corrections.items;
+    }
 
-    this.items.forEach((correction) => {
-      const startLine = correction.startLine.number;
-      const endLine = correction.endLine.number;
-      for (let i = startLine; i <= endLine; i++) {
-        lines[i] = lines[i] || [];
-        lines[i].push(correction);
-      }
-    });
-
-    return lines;
+    return new this.constructor(this.items.concat(items));
   }
 
   /**

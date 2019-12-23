@@ -125,6 +125,15 @@ Default: `true`
 
 Ignore incorrect usage checking of letter case
 
+#### `reporter` {'default' | 'texts'}
+
+Default: `'default'`
+
+Reporter:
+
+ - **default**: Show line numbers
+ - **texts**: Show corrections and text fragments
+
 #### `showDuplicates` {boolean}
 
 Default: `true` for log > 1

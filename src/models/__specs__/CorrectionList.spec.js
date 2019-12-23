@@ -15,18 +15,4 @@ describe('CorrectionList', () => {
 
     expect(filtered.map(c => c.provider)).toEqual(['test']);
   });
-
-  it('asLines', () => {
-    const list = new CorrectionList([
-      new Correction({ startLine: { number: 0 }, endLine: { number: 0 } }),
-      new Correction({ startLine: { number: 0 }, endLine: { number: 0 } }),
-      new Correction({ startLine: { number: 2 }, endLine: { number: 2 } }),
-    ]);
-
-    const lines = list.asLines();
-
-    expect(Object.keys(lines).length).toBe(2);
-    expect(lines[0].length).toBe(2);
-    expect(lines[2].length).toBe(1);
-  });
 });

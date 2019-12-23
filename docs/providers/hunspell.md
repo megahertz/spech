@@ -37,9 +37,9 @@ Default: `'ignore'`
 
 Determines how to process camel case word like `applicationConfig`
 
-- **ignore**: Do not check such a word.
-- **split**: Split into parts (application config) and check separately.
-- **check**: Pass `applicationConfig` directly to Hunspell.
+ - **ignore**: Do not check such a word.
+ - **split**: Split into parts (application config) and check separately.
+ - **check**: Pass `applicationConfig` directly to Hunspell.
 
 #### `useCache` {boolean}
 

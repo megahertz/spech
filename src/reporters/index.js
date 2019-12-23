@@ -1,6 +1,7 @@
 'use strict';
 
 const Default = require('./Default');
+const Texts = require('./Texts');
 
 module.exports = {
   reporterFactory,
@@ -11,5 +12,8 @@ module.exports = {
  * @return {Default}
  */
 function reporterFactory(reporterOptions = {}) {
-  return new Default(reporterOptions);
+  switch (reporterOptions.name) {
+    case 'texts': return new Texts(reporterOptions);
+    default: return new Default(reporterOptions);
+  }
 }

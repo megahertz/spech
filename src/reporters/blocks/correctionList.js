@@ -11,22 +11,16 @@ function correctionListFactory({
 }) {
   /**
    * @param {CorrectionList} corrections
+   * @return {Spech.PrintItem}
    */
   return function buildCorrectionList(corrections) {
     if (!showDuplicates && providerOrder) {
       corrections = corrections.filterUnique(providerOrder);
     }
 
-    const lines = corrections.asLines();
-    return Object.values(lines).reduce((items, line) => {
-      line.forEach((correction) => {
-        items.push(
-          buildCorrection(correction),
-          { newLine: true }
-        );
-      });
-
-      return items;
+    return corrections.items.reduce((list, correction) => {
+      list.push(buildCorrection(correction), { newLine: true });
+      return list;
     }, []);
   };
 }

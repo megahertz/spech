@@ -49,6 +49,9 @@ declare namespace Spech {
   }
 
   interface ReporterOptions {
+    colors: boolean;
+    name: string;
+    numberOfLines: string;
     providerOrder: string[];
     showDuplicates?: boolean;
     showProvider?: boolean;

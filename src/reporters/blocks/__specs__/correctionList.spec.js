@@ -5,7 +5,7 @@ const { correctionListFactory } = require('../correctionList');
 const Correction = require('../../../models/Correction');
 const CorrectionList = require('../../../models/CorrectionList');
 
-describe('correctionList', () => {
+describe('reporters/correctionList', () => {
   it('should print each correction', () => {
     const builder = correctionListFactory({
       buildCorrection: correction => 'line' + correction.startLine.number,

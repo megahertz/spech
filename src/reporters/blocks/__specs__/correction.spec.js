@@ -3,7 +3,7 @@
 const { describe, expect, it } = require('humile');
 const { correctionFactory } = require('../correction');
 
-describe('correction', () => {
+describe('reporters/correction', () => {
   it('should return full representation if all properties exists', () => {
     const builder = correctionFactory({ showProvider: true });
     const correction = {
