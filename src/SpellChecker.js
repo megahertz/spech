@@ -52,6 +52,11 @@ class SpellChecker {
     /**
      * @type {boolean}
      */
+    this.ignoreCamelCase = config.ignoreCamelCase;
+
+    /**
+     * @type {boolean}
+     */
     this.ignoreCase = config.ignoreCase;
   }
 
@@ -185,6 +190,7 @@ class SpellChecker {
       transformers.format(format),
       transformers.inDictionary(this.dictionary),
       transformers.ignoreCase(this.ignoreCase),
+      transformers.ignoreCamelCase(this.ignoreCamelCase),
     ]);
 
     const preparedText = transforms.modifyText(text);

@@ -19,13 +19,14 @@ General options:
   -i, --input         Pass text for checking directly
   
 Appearance options:
-      --colors           Force turn on colors in spec output
-      --log              Verbosity, from 0 (only errors) to 3 (debug)
-  -c, --ignore-case      Ignore incorrect usage of letter case
-  -r, --reporter         default, texts
-      --show-duplicates  Show duplicate corrections
-      --show-provider    Display provider name in results
-      --show-rule        Display correction rule if provider supports
+      --colors            Force turn on colors in spec output
+      --log               Verbosity, from 0 (only errors) to 3 (debug)
+  -c, --ignore-case       Ignore camelCase words
+  -c, --ignore-camel-case Ignore incorrect usage of letter case
+  -r, --reporter          default, texts
+      --show-duplicates   Show duplicate corrections
+      --show-provider     Display provider name in results
+      --show-rule         Display correction rule if provider supports
       
 Misc options:
       --detect-ci       Run only in the first CI task
@@ -97,6 +98,11 @@ class Config {
      * @type {number}
      */
     this.log = onUndefined(opts.log, 0);
+
+    /**
+     * @type {boolean}
+     */
+    this.ignoreCamelCase = onUndefined(opts.ignoreCamelCase, true);
 
     /**
      * @type {boolean}

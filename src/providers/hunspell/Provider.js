@@ -4,16 +4,6 @@ const { loadModule } = require('hunspell-asm');
 const AbstractProvider = require('../Provider');
 const { loadDictionary, normalizeLanguage } = require('./dictionaries');
 
-const CC_IGNORE = 1;
-const CC_SPLIT = 2;
-const CC_CHECK = 3;
-
-const CC_MAP = {
-  ignore: CC_IGNORE,
-  split: CC_SPLIT,
-  check: CC_CHECK,
-};
-
 class Provider extends AbstractProvider {
   /**
    * @param {Spech.ProviderHelpers} helpers
@@ -23,9 +13,6 @@ class Provider extends AbstractProvider {
     super(helpers, options);
     this.httpClient = helpers.createHttpClient();
     this.httpClient.on('error', this.logger.callback('hunspell:', 'info'));
-
-    const ccString = this.options.camelCaseBehavior;
-    this.options.camelCaseBehavior = CC_MAP[ccString] || CC_IGNORE;
 
     if (this.options.useCache === undefined) {
       this.options.useCache = !process.env.CI;
@@ -48,7 +35,7 @@ class Provider extends AbstractProvider {
    */
   async check(text, languages, format) {
     const hunspellInstances = await this.getHunspellForAllLanguages(languages);
-    const words = splitText(text, this.options.camelCaseBehavior);
+    const words = splitText(text);
 
     return words.reduce((warnings, { word, position }) => {
       const suggestions = this.checkWord(word, hunspellInstances);
@@ -154,8 +141,8 @@ class Provider extends AbstractProvider {
   }
 }
 
-function splitText(text, camelCaseBehavior = CC_IGNORE) {
-  let words = [];
+function splitText(text) {
+  const words = [];
   const wordRegExp = /\p{L}+'?\p{L}+/ug;
 
   // eslint-disable-next-line no-constant-condition
@@ -165,20 +152,7 @@ function splitText(text, camelCaseBehavior = CC_IGNORE) {
       break;
     }
 
-    if (camelCaseBehavior === CC_CHECK) {
-      words.push({ word, position });
-      continue;
-    }
-
-    const parts = splitCamelCaseWord(word, position);
-    if (parts.length < 2) {
-      words.push({ word, position });
-      continue;
-    }
-
-    if (camelCaseBehavior === CC_SPLIT) {
-      words = words.concat(parts);
-    }
+    words.push({ word, position });
   }
 
   return words;

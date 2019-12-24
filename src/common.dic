@@ -60,6 +60,7 @@ filesystem
 flexbox
 fmpeg
 frontend
+fs
 fullfilled
 fullpage
 fullscreen
@@ -86,11 +87,13 @@ IDE
 IIFE
 img
 iOS
+ipc
 jest
 jpg
 jquery
 js
 jscs
+jsdoc
 jshint
 json
 JSONP

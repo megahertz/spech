@@ -1,6 +1,7 @@
 'use strict';
 
 const InDictionary = require('./InDictionary');
+const IgnoreCamelCase = require('./IgnoreCamelCase');
 const IgnoreCase = require('./IgnoreCase');
 const LineNumber = require('./LineNumber');
 const Collection = require('./Collection');
@@ -8,6 +9,7 @@ const Markdown = require('./format/Markdown');
 
 module.exports = {
   createTransformers,
+  ignoreCamelCase,
   ignoreCase,
   inDictionary,
   format,
@@ -46,4 +48,12 @@ function ignoreCase(isEnabled) {
   }
 
   return new IgnoreCase();
+}
+
+function ignoreCamelCase(isEnabled) {
+  if (!isEnabled) {
+    return null;
+  }
+
+  return new IgnoreCamelCase();
 }
