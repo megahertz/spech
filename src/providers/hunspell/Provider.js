@@ -154,7 +154,7 @@ class Provider extends AbstractProvider {
 
 function splitText(text, camelCaseBehavior = CC_IGNORE) {
   let words = [];
-  const wordRegExp = /\p{L}+/ug;
+  const wordRegExp = /\p{L}+'?\p{L}+/ug;
 
   // eslint-disable-next-line no-constant-condition
   while (true) {

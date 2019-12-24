@@ -1,5 +1,6 @@
 'use strict';
 
+const Logger = require('../../utils/Logger');
 const { request } = require('./http/http.js');
 const HttpClient = require('./http/HttpClient');
 const text = require('./text');
@@ -13,7 +14,7 @@ module.exports = {
  * @param {Logger} logger
  * @return {Spech.ProviderHelpers}
  */
-function createHelpers(config, { logger }) {
+function createHelpers(config = {}, { logger = new Logger(0) } = {}) {
   return {
     /**
      * @param {Spech.HttpOptions} [httpOptions]
