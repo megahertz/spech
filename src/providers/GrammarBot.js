@@ -6,6 +6,16 @@ const API_URL = 'http://api.grammarbot.io/v2/check';
 const API_SIZE_LIMIT = 40000;
 const LANGUAGES = { 'en': 'en-US', 'en-us': 'en-US', 'en-gb': 'en-GB' };
 
+const DISABLED_RULES = {
+  markdown: [
+    'COMMA_PARENTHESIS_WHITESPACE',
+    'DOUBLE_PUNCTUATION',
+    'PUNCTUATION_PARAGRAPH_END',
+    'UNLIKELY_OPENING_PUNCTUATION',
+    'WHITESPACE_RULE',
+  ],
+};
+
 class GrammarBot extends Provider {
   /**
    * @param {Spech.ProviderHelpers} helpers
@@ -26,9 +36,11 @@ class GrammarBot extends Provider {
   /**
    * @param {string} text
    * @param {string[]} languages
-   * @return {Spech.ProviderResult}
+   * @param {Document.Format} format
+   * @return {Promise<Spech.ProviderResult>}
+   * @abstract
    */
-  async check(text, languages) {
+  async check(text, languages, format) {
     const normalizedLanguages = this.normalizeLanguages(languages);
     if (normalizedLanguages.length < 1) {
       return [];
@@ -38,7 +50,8 @@ class GrammarBot extends Provider {
       text,
       API_SIZE_LIMIT,
       this.checkFragment.bind(this),
-      normalizedLanguages
+      normalizedLanguages,
+      format
     );
   }
 
@@ -46,10 +59,11 @@ class GrammarBot extends Provider {
    * @param {string} text
    * @param {number} offset
    * @param {string[]} languages
+   * @param {Document.Format} format
    * @return {Spech.ProviderResult}
    * @private
    */
-  async checkFragment({ text, offset }, languages) {
+  async checkFragment({ text, offset }, languages, format) {
     const response = await this.httpClient.postUrlEncoded(API_URL, {
       api_key: this.options.apiKey,
       language: languages[0],
@@ -62,7 +76,7 @@ class GrammarBot extends Provider {
     }
 
     return matches.map((match) => {
-      if (this.isRuleDisabled(match.rule.id)) {
+      if (this.isRuleDisabled(match.rule.id, format)) {
         return undefined;
       }
 
@@ -98,7 +112,17 @@ class GrammarBot extends Provider {
     }
   }
 
-  isRuleDisabled(rule) {
+  /**
+   * @param {string} rule
+   * @param {Document.Format} format
+   * @return {boolean|*}
+   */
+  isRuleDisabled(rule, format) {
+    const disabledForFormat = DISABLED_RULES[format];
+    if (disabledForFormat && disabledForFormat.includes(rule)) {
+      return true;
+    }
+
     if (!Array.isArray(this.options.disabledRules)) {
       return false;
     }

@@ -177,7 +177,7 @@ class SpellChecker {
 
   /**
    * @param {string} text
-   * @param {string} format
+   * @param {Document.Format} format
    * @return {Promise<CorrectionList>}
    */
   async checkText(text, format) {
@@ -190,7 +190,11 @@ class SpellChecker {
     const preparedText = transforms.modifyText(text);
 
     const promises = this.providers.map(async (provider) => {
-      const corrections = await provider.check(preparedText, this.languages);
+      const corrections = await provider.check(
+        preparedText,
+        this.languages,
+        format
+      );
 
       return corrections.filter(Boolean).map((correction) => {
         return transforms.modifyCorrection(new Correction({
@@ -214,7 +218,7 @@ class SpellChecker {
       throw new Error('document should have type Document');
     }
 
-    document.corrections = await this.checkText(document.text, document.name);
+    document.corrections = await this.checkText(document.text, document.format);
 
     this.logger.debug('Checking document', document.name, 'complete');
 

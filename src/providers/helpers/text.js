@@ -50,7 +50,7 @@ function split(text, maxLength) {
  * @param {string} text
  * @param {number} maxLength
  * @param {function} asyncCallback
- * @param {*[]} fragmentArgs
+ * @param {...*} fragmentArgs
  * @return {Spech.ProviderResult}
  */
 async function splitAndProcessAsync(

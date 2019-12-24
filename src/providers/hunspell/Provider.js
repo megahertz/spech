@@ -42,9 +42,11 @@ class Provider extends AbstractProvider {
   /**
    * @param {string} text
    * @param {string[]} languages
-   * @return {Spech.ProviderResult}
+   * @param {Document.Format} format
+   * @return {Promise<Spech.ProviderResult>}
+   * @abstract
    */
-  async check(text, languages) {
+  async check(text, languages, format) {
     const hunspellInstances = await this.getHunspellForAllLanguages(languages);
     const words = splitText(text, this.options.camelCaseBehavior);
 

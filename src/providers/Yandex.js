@@ -27,9 +27,11 @@ class Yandex extends Provider {
   /**
    * @param {string} text
    * @param {string[]} languages
-   * @return {Spech.ProviderResult}
+   * @param {Document.Format} format
+   * @return {Promise<Spech.ProviderResult>}
+   * @abstract
    */
-  async check(text, languages) {
+  async check(text, languages, format) {
     const normalizedLanguages = this.normalizeLanguages(languages);
     if (normalizedLanguages.length < 1) {
       return [];

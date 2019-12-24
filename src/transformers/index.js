@@ -1,6 +1,5 @@
 'use strict';
 
-const path = require('path');
 const InDictionary = require('./InDictionary');
 const IgnoreCase = require('./IgnoreCase');
 const LineNumber = require('./LineNumber');
@@ -15,7 +14,7 @@ module.exports = {
 };
 
 const FORMATS = {
-  md: Markdown,
+  markdown: Markdown,
 };
 
 function createTransformers(additionalTransformers = []) {
@@ -29,19 +28,11 @@ function createTransformers(additionalTransformers = []) {
   return collection;
 }
 
-function format(formatOrFileName) {
-  if (typeof formatOrFileName !== 'string') {
-    return null;
-  }
-
-  let formatType = formatOrFileName;
-
-  if (formatOrFileName.match(/.*?\.\w+/)) {
-    formatType = path.extname(formatOrFileName).substr(1).toLowerCase();
-  }
-
-  const Formatter = FORMATS[formatType];
-
+/**
+ * @param {Document.Format} documentFormat
+ */
+function format(documentFormat) {
+  const Formatter = FORMATS[documentFormat] || Markdown;
   return new Formatter();
 }
 
