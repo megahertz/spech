@@ -60,7 +60,6 @@ class Default {
     return [
       { text: document.name, newLine: true },
       this.builders.correctionList(document.corrections, document.text),
-      { newLine: true },
     ];
   }
 

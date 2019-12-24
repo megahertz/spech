@@ -39,7 +39,7 @@ function correctionTextsFactory({
       blockSize
     );
 
-    return blocks.reduce((printBatch, block) => {
+    const batch = blocks.reduce((printBatch, block) => {
       const startLine = alignBlockByContent(block, numberOfLines, blockSize);
       const endLine = Math.min(numberOfLines - 1, startLine + blockSize - 1);
 
@@ -63,8 +63,12 @@ function correctionTextsFactory({
         printBatch.push(buildCorrection(correction), { newLine: true });
       });
 
+      printBatch.push({ newLine: true });
+
       return printBatch;
     }, [{ newLine: true }]);
+
+    return batch;
   };
 }
 

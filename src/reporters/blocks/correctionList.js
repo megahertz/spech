@@ -18,9 +18,13 @@ function correctionListFactory({
       corrections = corrections.filterUnique(providerOrder);
     }
 
-    return corrections.items.reduce((list, correction) => {
+    const batch = corrections.items.reduce((list, correction) => {
       list.push(buildCorrection(correction), { newLine: true });
       return list;
     }, []);
+
+    batch.push({ newLine: true });
+
+    return batch;
   };
 }

@@ -24,6 +24,7 @@ describe('reporters/correctionList', () => {
       { newLine: true },
       'line2',
       { newLine: true },
+      { newLine: true },
     ]);
   });
 });

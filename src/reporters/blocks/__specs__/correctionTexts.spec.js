@@ -48,6 +48,7 @@ describe('reporters/correctionTexts', () => {
       'line0', { newLine: true },
       'line2', { newLine: true },
       'line2', { newLine: true },
+      { newLine: true },
     ]);
   });
 
