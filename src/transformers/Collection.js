@@ -13,16 +13,16 @@ class Collection extends Transformer {
   }
 
   /**
-   * @param {string} text
-   * @return {string}
+   * @param {Document} document
+   * @return {Document}
    * @package
    */
-  modifyText(text) {
+  modifyDocument(document) {
     const transformers = this.transformers;
 
-    return transformers.reduce((changedText, transformer) => {
-      return transformer.modifyText(changedText);
-    }, text);
+    return transformers.reduce((doc, transformer) => {
+      return transformer.modifyDocument(doc);
+    }, document);
   }
 
   /**

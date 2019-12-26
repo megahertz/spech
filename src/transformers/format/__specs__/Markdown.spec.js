@@ -2,6 +2,7 @@
 
 const { describe, expect, it } = require('humile');
 const { codeBlocks } = require('../../../__specs__/fixtures');
+const Document = require('../../../models/Document');
 const Markdown = require('../Markdown');
 
 //               0 2             12              23          34
@@ -11,15 +12,15 @@ describe('transformers/Markdown', () => {
   it('should remove multiline code blocks', () => {
     const transformer = new Markdown();
 
-    const cropped = transformer.modifyText(codeBlocks);
+    const cropped = transformer.modifyDocument(new Document(null, codeBlocks));
 
-    expect(cropped).toBe(CROPPED);
+    expect(cropped.textForChecking).toBe(CROPPED);
   });
 
   it('should keep correct correction position', () => {
     const transformer = new Markdown();
 
-    transformer.modifyText(codeBlocks);
+    transformer.modifyDocument(new Document('doc.md', codeBlocks));
 
     const text1 = transformer.modifyCorrection({ position: 12 });
     expect(text1.position).toBe(54);

@@ -1,10 +1,11 @@
 'use strict';
 
+const Collection = require('./Collection');
+const Directive = require('./Directive');
 const InDictionary = require('./InDictionary');
 const IgnoreCamelCase = require('./IgnoreCamelCase');
 const IgnoreCase = require('./IgnoreCase');
 const LineNumber = require('./LineNumber');
-const Collection = require('./Collection');
 const Markdown = require('./format/Markdown');
 
 module.exports = {
@@ -22,6 +23,7 @@ const FORMATS = {
 function createTransformers(additionalTransformers = []) {
   const collection = new Collection();
   collection.addTransformer(new LineNumber());
+  collection.addTransformer(new Directive());
 
   additionalTransformers
     .filter(Boolean)

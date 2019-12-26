@@ -206,11 +206,11 @@ async function getInputDocument(opts) {
   const format = opts.format || 'md';
 
   if (stdin) {
-    return { name: `<STDIN>.${format}`, content: stdin };
+    return { name: '<STDIN>', content: stdin, format };
   }
 
   if (opts.input) {
-    return { name: `<INPUT>.${format}`, content: opts.input };
+    return { name: '<INPUT>', content: opts.input, format };
   }
 
   return null;

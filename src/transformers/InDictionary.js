@@ -9,6 +9,21 @@ class InDictionary extends Transformer {
   constructor(dictionary) {
     super();
     this.dictionary = dictionary;
+
+    /**
+     * @type {Document}
+     */
+    this.document = null;
+  }
+
+  /**
+   * @param {Document} document
+   * @return {Document}
+   * @package
+   */
+  modifyDocument(document) {
+    this.document = document;
+    return document;
   }
 
   /**
@@ -18,6 +33,11 @@ class InDictionary extends Transformer {
    */
   modifyCorrection(correction) {
     if (this.dictionary.includes(correction.fragment)) {
+      return null;
+    }
+
+    const docDict = this.document && this.document.dictionary;
+    if (docDict && docDict.includes(correction.fragment)) {
       return null;
     }
 

@@ -27,15 +27,14 @@ class Provider extends AbstractProvider {
   }
 
   /**
-   * @param {string} text
-   * @param {string[]} languages
-   * @param {Document.Format} format
+   * @param {Document} document
    * @return {Promise<Spech.ProviderResult>}
-   * @abstract
    */
-  async check(text, languages, format) {
-    const hunspellInstances = await this.getHunspellForAllLanguages(languages);
-    const words = splitText(text);
+  async check(document) {
+    const hunspellInstances = await this.getHunspellForAllLanguages(
+      document.languages
+    );
+    const words = splitText(document.textForChecking);
 
     return words.reduce((warnings, { word, position }) => {
       const suggestions = this.checkWord(word, hunspellInstances);

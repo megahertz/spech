@@ -49,7 +49,11 @@ async function actionMain(config) {
 
   const inputDocument = await config.inputDocumentPromise;
   if (inputDocument) {
-    checker.addDocumentFromString(inputDocument.name, inputDocument.content);
+    checker.addDocumentFromString(
+      inputDocument.name,
+      inputDocument.content,
+      inputDocument.format
+    );
   } else {
     await checker.addDocumentsByMask(config.path, config.documents);
   }

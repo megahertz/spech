@@ -34,24 +34,21 @@ class GrammarBot extends Provider {
   }
 
   /**
-   * @param {string} text
-   * @param {string[]} languages
-   * @param {Document.Format} format
+   * @param {Document} document
    * @return {Promise<Spech.ProviderResult>}
-   * @abstract
    */
-  async check(text, languages, format) {
-    const normalizedLanguages = this.normalizeLanguages(languages);
+  async check(document) {
+    const normalizedLanguages = this.normalizeLanguages(document.languages);
     if (normalizedLanguages.length < 1) {
       return [];
     }
 
     return this.helpers.text.splitAndProcessAsync(
-      text,
+      document.textForChecking,
       API_SIZE_LIMIT,
       this.checkFragment.bind(this),
       normalizedLanguages,
-      format
+      document.format
     );
   }
 

@@ -1,6 +1,7 @@
 'use strict';
 
 const { describe, expect, it } = require('humile');
+const Document = require('../../models/Document');
 const LineNumber = require('../LineNumber');
 const {
   loremIpsum,
@@ -8,7 +9,7 @@ const {
 } = require('../../__specs__/fixtures');
 
 describe('transformers/LineNumber', () => {
-  describe('modifyText', () => {
+  describe('modifyDocument', () => {
     it('returns empty array for empty texts', () => {
       expect(create('').index).toEqual([0]);
     });
@@ -96,6 +97,6 @@ describe('transformers/LineNumber', () => {
  */
 function create(text = loremIpsum) {
   const transformer = new LineNumber();
-  transformer.modifyText(text);
+  transformer.modifyDocument(new Document(null, text));
   return transformer;
 }

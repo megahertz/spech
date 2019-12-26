@@ -4,14 +4,14 @@ const Transformer = require('./Transformer');
 
 class LineNumber extends Transformer {
   /**
-   * @param {string} text
-   * @return {string}
+   * @param {Document} document
+   * @return {Document}
    * @package
    */
-  modifyText(text) {
-    this.index = LineNumber.buildIndex(text);
-    this.textLength = text.length;
-    return text;
+  modifyDocument(document) {
+    this.index = LineNumber.buildIndex(document.text);
+    this.textLength = document.text.length;
+    return document;
   }
 
   /**

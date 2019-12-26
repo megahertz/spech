@@ -99,10 +99,11 @@ class SpellChecker {
   /**
    * @param {string} name
    * @param {string} content
+   * @param {Document.Format} format
    * @return {Document}
    */
-  addDocumentFromString(name, content) {
-    const document = new Document(name, content);
+  addDocumentFromString(name, content, format = undefined) {
+    const document = new Document(name, content, format);
     this.addDocument(document);
     return document;
   }
@@ -185,22 +186,29 @@ class SpellChecker {
    * @param {Document.Format} format
    * @return {Promise<CorrectionList>}
    */
-  async checkText(text, format) {
+  async checkText(text, format = null) {
+    return this.checkDocument(new Document(null, text, format));
+  }
+
+  /**
+   * @param {Document} document
+   * @return {Promise<CorrectionList>}
+   */
+  async checkDocument(document) {
     const transforms = transformers.createTransformers([
-      transformers.format(format),
+      transformers.format(document.format),
       transformers.inDictionary(this.dictionary),
       transformers.ignoreCase(this.ignoreCase),
       transformers.ignoreCamelCase(this.ignoreCamelCase),
     ]);
 
-    const preparedText = transforms.modifyText(text);
+    document = transforms.modifyDocument(document);
+    if (document.languages.length < 1) {
+      document.languages = this.languages;
+    }
 
     const promises = this.providers.map(async (provider) => {
-      const corrections = await provider.check(
-        preparedText,
-        this.languages,
-        format
-      );
+      const corrections = await provider.check(document);
 
       return corrections.filter(Boolean).map((correction) => {
         return transforms.modifyCorrection(new Correction({
@@ -211,22 +219,9 @@ class SpellChecker {
     });
 
     const corrections = await Promise.all(promises);
-
-    return new CorrectionList(corrections.flat(2).filter(Boolean));
-  }
-
-  /**
-   * @param {Document} document
-   * @return {Promise<CorrectionList>}
-   */
-  async checkDocument(document) {
-    if (!(document instanceof Document)) {
-      throw new Error('document should have type Document');
-    }
-
-    document.corrections = await this.checkText(document.text, document.format);
-
-    this.logger.debug('Checking document', document.name, 'complete');
+    document.corrections = new CorrectionList(
+      corrections.flat(2).filter(Boolean)
+    );
 
     return document.corrections;
   }

@@ -2,6 +2,7 @@
 
 const path = require('path');
 const CorrectionList = require('./CorrectionList');
+const Dictionary = require('./Dictionary');
 
 const Format = {
   markdown: 'markdown',
@@ -12,10 +13,14 @@ const EXTENSION_TO_FORMAT = {
 };
 
 class Document {
-  constructor(name, text) {
+  constructor(name, text, format = this.detectFormatByName(name)) {
     this.name = name;
     this.text = text;
-    this.format = this.detectFormatByName(name);
+    this.textForChecking = text;
+    this.format = format;
+    this.languages = [];
+    this.isExcluded = false;
+    this.dictionary = new Dictionary();
 
     /**
      * @type {CorrectionList}

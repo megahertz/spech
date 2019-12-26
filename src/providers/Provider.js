@@ -29,13 +29,11 @@ class Provider {
   }
 
   /**
-   * @param {string} text
-   * @param {string[]} languages
-   * @param {Document.Format} format
+   * @param {Document} document
    * @return {Promise<Spech.ProviderResult>}
    * @abstract
    */
-  async check(text, languages, format) {
+  async check(document) {
     throw new Error('check() method is not implemented');
   }
 

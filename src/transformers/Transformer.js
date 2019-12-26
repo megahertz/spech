@@ -5,12 +5,12 @@
  */
 class Transformer {
   /**
-   * @param {string} text
-   * @return {string}
+   * @param {Document} document
+   * @return {Document}
    * @package
    */
-  modifyText(text) {
-    return text;
+  modifyDocument(document) {
+    return document;
   }
 
   /**

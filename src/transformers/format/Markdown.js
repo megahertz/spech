@@ -1,45 +1,18 @@
 'use strict';
 
-const Transformer = require('../Transformer');
+const Cropper = require('../Cropper');
 
-class Markdown extends Transformer {
-  constructor() {
-    super();
-
-    this.crops = [];
-  }
-
+class Markdown extends Cropper {
   /**
-   * @param {string} text
-   * @return {string}
+   * @param {Document} document
+   * @return {Document}
    * @package
    */
-  modifyText(text) {
-    return this.removeCodeBlocks(text);
-  }
-
-  /**
-   * @param {Correction} correction
-   * @return {Correction | void}
-   * @package
-   */
-  modifyCorrection(correction) {
-    let position = correction.position;
-
-    for (let i = this.crops.length - 1; i >= 0; i--) {
-      const crops = this.crops[i];
-      position = crops
-        .reduce((sum, crop) => {
-          if (sum >= crop.position) {
-            sum += crop.length;
-          }
-
-          return sum;
-        }, position);
-    }
-
-    correction.position = position;
-    return correction;
+  modifyDocument(document) {
+    document.textForChecking = this.removeMarkdownBlocks(
+      document.textForChecking
+    );
+    return document;
   }
 
   /**
@@ -47,7 +20,7 @@ class Markdown extends Transformer {
    * @return {string}
    * @private
    */
-  removeCodeBlocks(text) {
+  removeMarkdownBlocks(text) {
     const replacement = '\n';
     const replacementLength = replacement.length;
 
@@ -68,16 +41,11 @@ class Markdown extends Transformer {
     ];
 
     return regexps.reduce((result, regExp) => {
-      const crops = [];
-      this.crops.push(crops);
-
+      this.addCropGroup();
       return result.replace(regExp, (match, ...rest) => {
-        const position = rest[rest.length - 2];
-        const length = match.length - replacementLength;
-
-        crops.push({
-          position,
-          length,
+        this.addCrop({
+          position: rest[rest.length - 2],
+          length: match.length - replacementLength,
         });
 
         return replacement;
