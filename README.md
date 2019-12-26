@@ -33,6 +33,32 @@ You can check a string value using STDIN or --input argument
 
 `spech --input 'Check the text'`
 
+### Directives
+
+#### disable
+
+```Markdown
+<!-- spech-disable -->
+This text is ignored
+<!-- spech-enable -->
+```
+
+#### dictionary
+
+Add a phrase to a local document dictionary
+
+```Markdown
+<!-- spech-dictionary myword -->
+```
+
+#### languages
+
+Add document-specific languages
+
+```Markdown
+<!-- spech-languages en es -->
+```
+
 ## Providers
 
 To configure a provider pass `-p` flag:
