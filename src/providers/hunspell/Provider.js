@@ -143,7 +143,7 @@ class Provider extends AbstractProvider {
 
 function splitText(text) {
   const words = [];
-  const wordRegExp = /\p{L}+'?\p{L}+/ug;
+  const wordRegExp = /\p{L}+['’]?\p{L}+/ug;
 
   // eslint-disable-next-line no-constant-condition
   while (true) {
@@ -156,17 +156,6 @@ function splitText(text) {
   }
 
   return words;
-}
-
-function splitCamelCaseWord(word, position) {
-  const parts = word.split(/(?=[A-Z])/);
-  let offset = position;
-
-  return parts.map((part) => {
-    const result = { word: part, position: offset };
-    offset += word.length;
-    return result;
-  });
 }
 
 module.exports = Provider;
