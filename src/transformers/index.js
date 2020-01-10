@@ -23,11 +23,12 @@ const FORMATS = {
 function createTransformers(additionalTransformers = []) {
   const collection = new Collection();
   collection.addTransformer(new LineNumber());
-  collection.addTransformer(new Directive());
 
   additionalTransformers
     .filter(Boolean)
     .forEach(collection.addTransformer, collection);
+
+  collection.addTransformer(new Directive());
 
   return collection;
 }
