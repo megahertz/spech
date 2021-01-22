@@ -10,7 +10,7 @@ function getConfig() {
   ]);
 
   options.help(`
-Usage: spech [Path patterns]
+Usage: spech [Path pattern 1] [Path pattern n]
 General options:
   -l, --languages     Used language/languages, default 'en-us'
   -d, --dictionaries  Dictionary file patterns
